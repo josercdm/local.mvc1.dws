@@ -33,6 +33,19 @@ foreach ($script as $file) {
 </script>
 <!-- Bootstrap 4 -->
 <script src="/assets/adminLTE/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="/assets/adminLTE/datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/adminLTE/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/assets/adminLTE/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/assets/adminLTE/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/assets/adminLTE/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/assets/adminLTE/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/assets/adminLTE/jszip/jszip.min.js"></script>
+<script src="/assets/adminLTE/pdfmake/pdfmake.min.js"></script>
+<script src="/assets/adminLTE/pdfmake/vfs_fonts.js"></script>
+<script src="/assets/adminLTE/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/assets/adminLTE/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/assets/adminLTE/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- ChartJS -->
 <script src="/assets/adminLTE/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -53,7 +66,38 @@ foreach ($script as $file) {
 <script src="/assets/adminLTE/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/assets/adminLTE/js/pages/adminlte.js"></script>
-<script src="/assets/adminLTE/js/pages/dashboard.js"></script>
+<!-- <script src="/assets/adminLTE/js/pages/dashboard.js"></script> -->
+
+<script>
+    $(function() {
+        $("#tableConfiguracoes").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "info": false,
+            "lengthChange": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print"],
+            "language": {
+                "search": "Buscar:",
+                "zeroRecords": "Nenhum dado à exibir!",
+                "paginate": {
+                    "first": "Início",
+                    "last": "Último",
+                    "next": "Próximo",
+                    "previous": "Anterior"
+                },
+                "buttons":{
+                    "copy": "Copiar",
+                    "print": "Imprimir"
+                },
+                "emptyTable": "Nenhum dado à exibir!",
+            }
+
+        }).buttons().container().appendTo('#tableConfiguracoes_wrapper .col-md-6:eq(0)');
+
+    });
+</script>
+
 </body>
 
 </html>
