@@ -43,7 +43,7 @@ require APP . 'view/admin/_templates/initFile.php';
                     echo '<td>' . $config['app_title'] . '</td>';
                     echo '<td>' . $config['environment'] . '</td>';
                     echo '<td>' . $config['protocol'] . '</td>';
-                    echo '<td class="text-center"><a class="btn-xs btn-success" href="' . URL_ADMIN . '/configuracoes/editar/' . $config['id'] . '"><i class="fa fa-pencil"></i> Editar Informações</a> </td>';
+                    echo '<td class="text-center"><a class="btn btn-success btn-sm" href="' . URL_ADMIN . '/configuracoes/editar/' . $config['id'] . '"><i class="fa fa-pencil"></i> Editar Informações</a> </td>';
                     echo '</tr>';
                 } ?>
             </tbody>
