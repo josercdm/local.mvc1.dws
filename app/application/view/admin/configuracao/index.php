@@ -7,59 +7,48 @@ $script = [
 require APP . 'view/admin/_templates/initFile.php';
 ?>
 
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Configurações do Sistema</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="<?= URL_ADMIN ?>/dashboard">Inicio</a>
-            </li>
-            <li class="active">
-                <strong>Configurações do Sistema</strong>
-            </li>
-        </ol>
-    </div>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Configurações do Sistema</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="<?= URL_ADMIN ?>/dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Configurações</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 </div>
+<!-- /.content-header -->
 
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Configurações do Sistema</h5>
-                </div>
-                <div class="ibox-content">
-                    <div class="form-group col-lg-12">
-
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example">
-                            <thead>
-                                <tr>
-                                    <th>Nome do Sistema</th>
-                                    <th width="90">Situação</th>
-                                    <th width="90">Protocolo</th>
-                                    <th width="180">Ação</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ((array)$response as $config) {
-                                    echo '<tr class="gradeX">';
-                                    echo '<td>' . $config['app_title'] . '</td>';
-                                    echo '<td>' . $config['environment'] . '</td>';
-                                    echo '<td>' . $config['protocol'] . '</td>';
-                                    echo '<td class="text-center"><a class="btn-xs btn-success" href="' . URL_ADMIN . '/configuracoes/editar/' . $config['id'] . '"><i class="fa fa-pencil"></i> Editar Informações</a> </td>';
-                                    echo '</tr>';
-                                } ?>
-                            </tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover dataTables-example">
+            <thead>
+                <tr>
+                    <th>Nome do Sistema</th>
+                    <th width="90">Situação</th>
+                    <th width="90">Protocolo</th>
+                    <th width="180">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ((array)$response as $config) {
+                    echo '<tr class="gradeX">';
+                    echo '<td>' . $config['app_title'] . '</td>';
+                    echo '<td>' . $config['environment'] . '</td>';
+                    echo '<td>' . $config['protocol'] . '</td>';
+                    echo '<td class="text-center"><a class="btn-xs btn-success" href="' . URL_ADMIN . '/configuracoes/editar/' . $config['id'] . '"><i class="fa fa-pencil"></i> Editar Informações</a> </td>';
+                    echo '</tr>';
+                } ?>
+            </tbody>
+            </tbody>
+        </table>
     </div>
 </div>
 
