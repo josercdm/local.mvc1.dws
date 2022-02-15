@@ -5,13 +5,13 @@
 </div>
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-    <strong>Copyright &copy; <a href="#" target="_blank"><strong><?= APP_TITLE ?></strong></a> 
+    <strong>Copyright &copy; <a href="#" target="_blank"><strong><?= APP_TITLE ?></strong></a>
         <strong><small>© <script>
                     document.write(new Date().getFullYear());
                 </script></small></strong></strong>
     Todos os direitos reservados.
     <div class="float-right d-none d-sm-inline-block">
-        <b>V</b>1.0
+        <b>V</b>2.0
     </div>
 </footer>
 
@@ -22,13 +22,7 @@
 <script src="/assets/adminLTE/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 
-<?php
-foreach ($script as $file) {
-    if (file_exists($file)) {
-        echo '<script src="/' . $file . '"></script>';
-    }
-}
-?>
+
 <script src="/assets/adminLTE/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
@@ -36,6 +30,7 @@ foreach ($script as $file) {
 </script>
 <!-- Bootstrap 4 -->
 <script src="/assets/adminLTE/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/adminLTE/swa2/sweetalert2@11.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="/assets/adminLTE/datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/adminLTE/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -69,38 +64,16 @@ foreach ($script as $file) {
 <script src="/assets/adminLTE/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/assets/adminLTE/js/pages/adminlte.js"></script>
-<!-- <script src="/assets/adminLTE/js/pages/dashboard.js"></script> -->
-
-<script>
-    $(function() {
-        $("#tableConfiguracoes").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "info": false,
-            "lengthChange": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print"],
-            "language": {
-                "search": "Buscar:",
-                "zeroRecords": "Nenhum dado à exibir!",
-                "paginate": {
-                    "first": "Início",
-                    "last": "Último",
-                    "next": "Próximo",
-                    "previous": "Anterior"
-                },
-                "buttons":{
-                    "copy": "Copiar",
-                    "print": "Imprimir"
-                },
-                "emptyTable": "Nenhum dado à exibir!",
-            }
-
-        }).buttons().container().appendTo('#tableConfiguracoes_wrapper .col-md-6:eq(0)');
-
-    });
-</script>
-
+<script src="/app/vendor/igorescobar/jquery-mask-plugin/dist/jquery.mask.js"></script>
+<script src="/assets/adminLTE/js/pages/functions.js"></script>
+<?php
+foreach ($script as $file) {
+    if (file_exists($file)) {
+        echo '<script src="/' . $file . '"></script>';
+        
+    }
+}
+?>
 </body>
 
 </html>

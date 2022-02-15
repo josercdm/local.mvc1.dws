@@ -3,7 +3,8 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "phpmailer/phpmailer": "~6.1"
+        "phpmailer/phpmailer": "~6.1",
+        "igorescobar/jquery-mask-plugin": "*"
     },
     "autoload":
     {

@@ -113,7 +113,7 @@ class Route
                 $this->get('',ucfirst($controller).'Controller@index');
                 break;
             case 'novo':
-                $this->get('novo',ucfirst($controller).'Controller@viewNew');
+                $this->get('novo',ucfirst($controller).'Controller@newUser');
                 break;
             case 'editar':
                 $this->get('editar',ucfirst($controller).'Controller@viewEdit','id');

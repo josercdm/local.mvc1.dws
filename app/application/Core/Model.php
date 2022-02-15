@@ -25,7 +25,15 @@ class Model
         return self::$PDO;
     }
 
-    public function create($table, $fields, $exception = [])
+    public function find($table, $id)
+    {
+        $sql = "SELECT * FROM " . $table . " WHERE id = :id LIMIT 1";
+        $query = $this->PDO()->prepare($sql);
+        $query->execute([':id' => $id]);
+        return $query->fetch();
+    }
+
+    /* public function create($table, $fields, $exception = [])
     {
         $PDO = $this->PDO();
         $set = [];
@@ -111,13 +119,7 @@ class Model
         return $query->fetchAll();
     }
 
-    public function find($table, $id)
-    {
-        $sql = "SELECT * FROM " . $table . " WHERE id = :id LIMIT 1";
-        $query = $this->PDO()->prepare($sql);
-        $query->execute([':id' => $id]);
-        return $query->fetch();
-    }
+    
 
     public function defineOrder($table, $id, $order, $id_categoria = false, $id_cadastro = false)
     {
@@ -129,5 +131,34 @@ class Model
         $PDO = $this->PDO();
         $PDO->query("SET @a := -1; UPDATE " . $table . " SET ordem = @a := @a+1 WHERE 1=1 " . $where . " AND id <> " . $id . " AND (ordem <= " . $order . " OR ordem IS NULL) ORDER BY ordem;");
         $PDO->query("SET @a := " . $order . "; UPDATE " . $table . " SET ordem = @a := @a+1 WHERE 1=1 " . $where . " AND id <> " . $id . " AND (ordem >= " . $order . " OR ordem IS NULL) ORDER BY ordem;");
-    }
+    }*/
+
+    public function validaCPF($cpf) {
+ 
+        // Extrai somente os números
+        $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+         
+        // Verifica se foi informado todos os digitos corretamente
+        if (strlen($cpf) != 11) {
+            return false;
+        }
+    
+        // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+        if (preg_match('/(\d)\1{10}/', $cpf)) {
+            return false;
+        }
+    
+        // Faz o calculo para validar o CPF
+        for ($t = 9; $t < 11; $t++) {
+            for ($d = 0, $c = 0; $c < $t; $c++) {
+                $d += $cpf[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            if ($cpf[$c] != $d) {
+                return false;
+            }
+        }
+        return true;
+    
+    } 
 }

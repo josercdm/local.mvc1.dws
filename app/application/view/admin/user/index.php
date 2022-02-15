@@ -1,97 +1,105 @@
 <?php
 $title = '';
-$css = [
-    'assets/admin/css/plugins/dataTables/datatables.min.css'
-];
-$script = [
-    'assets/admin/js/plugins/dataTables/datatables.min.js'
-];
+$css = [];
+$script = [];
 require APP . 'view/admin/_templates/initFile.php';
 ?>
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-md-12">
-            <i class="fa fa-users fa-3x pull-right icon-heading"></i>
-            <h2>Usuários</h2>
-        </div>
-    </div>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Usuários</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="<?= URL_ADMIN ?>/inicio">Início</a></li>
+                    <li class="breadcrumb-item active">Usuários</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 
-    <div class="col-md-12 m-t-md">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <a href="<?=URL_ADMIN?>/usuario/novo" class="btn btn-primary btn-sm">Novo</a>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <a href="/admin/usuario/novo" class="btn btn-primary btn-sm">Novo</a>
             </div>
-            <div class="ibox-content">
-
+            <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example" >
+                    <table id="tableUsers" class="display compact stripe" style="width:100%">
                         <thead>
-                        <tr>
+                            <th>Ações</th>
+                            <th> </th>
                             <th>Nome</th>
-                            <?php if(@$_SESSION['acesso'] == 'Administrador') { ?>
-                            <th>Tipo</th>
-                            <th>Loja</th>
-                            <?php } ?>
-                            <th>Permissões</th>
+                            <th>E-mail</th>
+                            <th>Usuário</th>
+                            <th>Data/Nascimento</th>
+                            <th>CPF</th>
+                            <th>RG</th>
                             <th>Telefone</th>
-                            <th>Email</th>
-                            <th width="150">Ações</th>
-                        </tr>
+                            <th>Celular</th>
+                            <th>CEP</th>
+                            <th>Endereço</th>
+                            <th>Número</th>
+                            <th>Complemento</th>
+                            <th>Bairro</th>
+                            <th>Cidade/UF</th>
+                            <th>Banco</th>
+                            <th>Agência</th>
+                            <th>Conta</th>
+                            <th>Operador</th>
+                            <th>Tipo/Conta</th>
+                            <th>Sessão</th>
+                            <th>Data/Cadastro</th>
+                            <th>Ultima Modificação</th>
+                            <th>Status</th>
                         </thead>
                         <tbody>
-                        <?php
-                        foreach ((array)$response as $usuario) {
-                            echo '<tr class="gradeX">';
-                            echo '<td><a href="' . URL_ADMIN . '/usuario/editar/' . $usuario['id'] . '">' . $usuario['nome'] . '</a></td>';
-                            if(@$_SESSION['acesso'] == 'Administrador') {
-                            echo '<td>' . $usuario['acesso'] . '</td>';
-                            echo '<td>' . $usuario['loja'] . '</td>';
+                            <?php
+                            foreach ($response as $user) {
+                            ?>
+                                <tr>
+                                    <td class="px-5"><a href="/admin/usuario/editar/<?= $user['id'] ?>" class="btn btn-primary btn-sm btn-block"><i class="fa fa-edit"></i></a></td>
+                                    <td><img src="/<?= $user['imagem'] ?>" class="img-circle" height="50px"></td>
+                                    <td><?= $user['nome'] ?></td>
+                                    <td><?= $user['email'] ?></td>
+                                    <td><?= $user['user'] ?></td>
+                                    <td><?= $user['data_nascimento'] ?></td>
+                                    <td><?= $user['cpf'] ?></td>
+                                    <td><?= $user['rg'] ?></td>
+                                    <td><?= $user['telefone'] ?></td>
+                                    <td><?= $user['celular'] ?></td>
+                                    <td><?= $user['cep'] ?></td>
+                                    <td><?= $user['endereco'] ?></td>
+                                    <td><?= $user['numero'] ?></td>
+                                    <td><?= $user['complemento'] ?></td>
+                                    <td><?= $user['bairro'] ?></td>
+                                    <td><?= $user['cidade'] ?>/<?= $user['estado'] ?></td>
+                                    <td><?= $user['banco'] ?></td>
+                                    <td><?= $user['agencia'] ?></td>
+                                    <td><?= $user['conta'] ?></td>
+                                    <td><?= $user['op_vr'] ?></td>
+                                    <td><?= $user['tipo_conta'] ?></td>
+                                    <td><?= $user['session'] ?></td>
+                                    <td><?= $user['data_cadastro'] ?></td>
+                                    <td><?= $user['data_alteracao'] ?></td>
+                                    <td><?= $user['status'] ?></td>
+                                </tr>
+
+                            <?php
                             }
-                            echo '<td>' . $usuario['permissoes'] . '</td>';
-                            echo '<td>' . $usuario['telefone'] . '</td>';
-                            echo '<td>' . $usuario['email'] . '</td>';
-                            echo '<td class="text-center"><a href="' . URL_ADMIN . '/usuario/editar/' . $usuario['id'] . '"><i class="fa fa-edit"></i> Editar</a> | ';
-                            echo '<a href="' . URL_ADMIN . '/usuario/remover/' . $usuario['id'] . '" id="remover"><i class="fa fa-remove"></i> Remover</a></td>';
-                            echo '</tr>';
-                        }
-                        ?>
+                            ?>
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function(){
-            $('.dataTables-example').DataTable({
-                pageLength: 100,
-                responsive: true,
-                dom: '<"html5buttons"B>Tfgitlp',
-                buttons: [
-                    {extend: 'excel', title: '<?=APP_TITLE?>'},
-                    {extend: 'pdf', title: '<?=APP_TITLE?>'},
-
-                    {extend: 'print',
-                        customize: function (win){
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ],
-                language: {
-                    "url": "assets/admin/js/plugins/dataTables/i18n/Portuguese-Brasil.json"
-                }
-            });
-
-        });
-
-    </script>
+</div>
 
 <?php
 require APP . 'view/admin/_templates/endFile.php';

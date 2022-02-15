@@ -4,8 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37a12ef3f4345218b10d26c981dfefa5",
+    "content-hash": "c9c8338cdc3275402f2d09c3abb49342",
     "packages": [
+        {
+            "name": "igorescobar/jquery-mask-plugin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kamihouse/jQuery-Mask-Plugin.git",
+                "reference": "c2c24615bfd0ffc95011f084fd2c1babf17d75d5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kamihouse/jQuery-Mask-Plugin/zipball/c2c24615bfd0ffc95011f084fd2c1babf17d75d5",
+                "reference": "c2c24615bfd0ffc95011f084fd2c1babf17d75d5",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Escobar",
+                    "email": "blog@igorescobar.com",
+                    "homepage": "https://about.me/igorescobar",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A jQuery Plugin to make masks on form fields and html elements.",
+            "homepage": "https://github.com/igorescobar/jQuery-Mask-Plugin",
+            "keywords": [
+                "jquery",
+                "mask",
+                "plugin"
+            ],
+            "time": "2016-05-10T00:20:25+00:00"
+        },
         {
             "name": "phpmailer/phpmailer",
             "version": "v6.5.3",

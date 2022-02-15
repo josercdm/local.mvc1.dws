@@ -1,196 +1,182 @@
 <?php
-$title = '';
-$css = [
-    'assets/admin/css/plugins/jasny/jasny-bootstrap.min.css',
-    'assets/admin/css/plugins/select2/select2.min.css',
-];
+$title = 'Criar Novo Usuário';
+$css = [];
 $script = [
-    'assets/admin/js/plugins/jasny/jasny-bootstrap.min.js',
-    'assets/admin/js/plugins/parsley/parsley.min.js',
-    'assets/admin/js/plugins/parsley/i18n/pt-br.js',
-    'assets/admin/js/plugins/maskedinput/jquery.maskedinput.min.js',
-    'assets/admin/js/plugins/select2/select2.full.min.js',
+    'assets/adminLTE/js/editUser/edit.js'
 ];
 require APP . 'view/admin/_templates/initFile.php';
 ?>
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-md-12">
-            <i class="fa fa-users fa-3x pull-right icon-heading"></i>
-            <h2>Usuários</h2>
-        </div>
-    </div>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Novo usuário</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="<?= URL_ADMIN ?>/inicio">Início</a></li>
+                    <li class="breadcrumb-item active">Novo usuário</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 
-    <div class="col-md-12 m-t-md">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5><?= isset($response['nome']) ? 'Usuário: ' . $response['nome'] : 'Novo usuário' ?></h5>
-            </div>
-            <div class="ibox-content">
-
-                <form role="form" method="post" action="<?= isset($response['id']) ? URL_ADMIN . '/usuario/salvar' : URL_ADMIN . '/usuario/cadastrar' ?>" enctype="multipart/form-data">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
-                                <?php if(@$_SESSION['acesso'] == 'Administrador') { ?>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Loja</label>
-                                        <select name="id_loja" class="form-control" required>
-                                            <option value="">Selecione</option>
-                                            <?php
-                                            foreach ($response['lojas'] as $item) {
-                                                echo '<option value="' . $item['id'] . '">' . $item['nome'] . '</option>';
-                                            }
-                                            ?>
-                                        </select>
-                                        <script>$('select[name=id_loja]').val('<?= isset($response['id_loja']) ? $response['id_loja'] : '' ?>')</script>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Acesso</label>
-                                        <select name="acesso" class="form-control" required>
-                                            <option>Empresa</option>
-                                            <option>Administrador</option>
-                                        </select>
-                                        <script>$('select[name=acesso]').val('<?= isset($response['acesso']) ? $response['acesso'] : '' ?>')</script>
-                                    </div>
-                                </div>
-                                <?php } ?>
-                                <div class="clearfix"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Nome</label>
-                                        <input type="text" name="nome" placeholder="" class="form-control" value="<?= isset($response['nome']) ? $response['nome'] : '' ?>" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Telefone</label>
-                                        <input type="text" name="telefone" placeholder="" class="form-control telefone" value="<?= isset($response['telefone']) ? $response['telefone'] : '' ?>">
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" name="email" placeholder="" class="form-control" value="<?= isset($response['email']) ? $response['email'] : '' ?>" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Senha</label>
-                                        <input type="password" name="senha" placeholder="" class="form-control" value="" autocomplete="new-password">
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="formUser" method="POST">
+                    <div class="form-group">
+                        <div class="col-12">
+                            <h5 class="text-primary font-weight-bold">Informações do usuário</h5>
                         </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Permissões <a class="badge badge-primary" data-toggle="modal" data-target="#myModal">?</a></label>
-                                        <select name="permissoes[]" class="form-control select2" multiple required>
-                                            <?php
-                                            foreach ($response['permissoes'] as $item) {
-                                                $selected = (in_array($item['id'],$response['permissao']) ? 'SELECTED' : '');
-                                                echo '<option value="' . $item['id'] . '" ' . $selected . '>' . $item['nome'] . '</option>';
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Avatar</label>
-                                        <input type="file" name="imagem" placeholder="" class="form-control" value="" accept="image/*">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <?php
-                                    if(isset($response['imagem']) && $response['imagem']) {
-                                        ?>
-                                        <div class="user-image" style="background-image: url('<?= $response['imagem']?>');">
-                                        </div>
-                                        <?php
-                                    }
-                                    ?>
-                                </div>
+                        <div class="input-group">
+                            <div class="col-sm-12 col-md-4">
+
+                                <label for="u_status">Status</label><br>
+                                <select name="u_status" id="u_status" class="form-control">
+                                    <option value="">Selecione um status</option>
+                                    <option value="1">Selecione um status</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_user">Nome de usuário</label><br>
+                                <input type="text" name="u_user" id="u_user" class="form-control" placeholder="Escreva um nome de usuário" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_pass">Senha</label><br>
+                                <input type="password" name="u_pass" id="u_pass" class="form-control" placeholder="Crie uma senha" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_email">E-mail</label><br>
+                                <input type="email" name="u_email" id="u_email" class="form-control" placeholder="Informe seu e-mail" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_type_user">Tipo de usuário</label><br>
+                                <select name="u_type_user" id="u_type_user" class="form-control">
+                                    <option value="">Selecione um tipo</option>
+                                    <option value="Usuario">Usuário</option>
+                                    <option value="Administrador">Administrador</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_meta">Meta</label><br>
+                                <input type="text" name="u_meta" id="u_meta" class="form-control" placeholder="10.000,00" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_comissao">Comissão (%)</label><br>
+                                <input type="text" name="u_comissao" id="u_comissao" class="form-control" placeholder="10%" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_comissao_b_meta">Comissão Bater Meta (%)</label><br>
+                                <input type="text" name="u_comissao_b_meta" id="u_comissao_b_meta" class="form-control" placeholder="10%" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_supervisor">Comissão Bater Meta (%)</label><br>
+                                <select name="u_supervisor" id="u_supervisor" class="form-control">
+                                    <option value="">Selecione um supervisor</option>
+                                    <option value="1">1</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="hr-line-dashed m-t-sm"></div>
-                            <div class="form-group m-b-n-sm">
-                                <input type="hidden" name="id" value="<?= isset($response['id']) ? $response['id'] : '' ?>">
-                                <button class="btn btn-primary m-t-n-xs" type="submit"><strong>Salvar</strong></button>
-                                <a href="javascript:history.back()" class="btn btn-default m-t-n-xs"><strong>Voltar</strong></a>
+                        <div class="col-12 my-4">
+                            <h5 class="text-primary font-weight-bold">Dados pessoais</h5>
+                        </div>
+                        <div class="input-group">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_nome">Nome</label><br>
+                                <input type="text" name="u_nome" id="u_nome" class="form-control" placeholder="Nome completo" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_cpf">CPF</label><br>
+                                <input type="text" name="u_cpf" id="u_cpf" class="form-control" placeholder="Informe o CPF" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_telefone">Telefone</label><br>
+                                <input type="tel" name="u_telefone" id="u_telefone" class="form-control" placeholder="Informe o telefone" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_celular">Celular</label><br>
+                                <input type="tel" name="u_celular" id="u_celular" class="form-control" placeholder="Informe o celular" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_nasc">Data de Nascimento</label><br>
+                                <input type="date" name="u_nasc" id="u_nasc" class="form-control" placeholder="Data de nascimento" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_atuacao_uf">Região de Atuação</label><br>
+                                <select name="u_atuacao_uf" id="u_atuacao_uf" class="form-control">
+                                    <option value="">Selecione um estado</option>
+                                    <option value="1">1</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_equipe">Equipe</label><br>
+                                <select name="u_equipe" id="u_equipe" class="form-control">
+                                    <option value="">Selecione uma equipe</option>
+                                    <option value="1">1</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_equipe2">Equipe2</label><br>
+                                <select name="u_equipe2" id="u_equipe2" class="form-control">
+                                    <option value="">Selecione uma equipe</option>
+                                    <option value="1">1</option>
+                                </select>
                             </div>
                         </div>
+                        <div class="col-12 my-4">
+                            <h5 class="text-primary font-weight-bold">Endereço</h5>
+                        </div>
+                        <div class="input-group">
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_cep">CEP</label><br>
+                                <input type="text" name="u_cep" id="u_cep" class="form-control" placeholder="Informe o CEP" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_rua">Endereço</label><br>
+                                <input type="text" name="u_rua" id="u_rua" class="form-control" placeholder="Informe o nome da rua" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_numero">Número</label><br>
+                                <input type="text" name="u_numero" id="u_numero" class="form-control" placeholder="Informe o numero" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_complemento">Complemento</label><br>
+                                <input type="text" name="u_complemento" id="u_complemento" class="form-control" placeholder="Apartamento/Casa" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_bairro">Bairro</label><br>
+                                <input type="text" name="u_bairro" id="u_bairro" class="form-control" placeholder="Centro" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_cidade">Cidade</label><br>
+                                <input type="text" name="u_cidade" id="u_cidade" class="form-control" placeholder="Goiânia" required>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label for="u_estado">Estado</label><br>
+                                <input type="text" name="u_estado" id="u_estado" class="form-control" placeholder="GO" required>
+                            </div>
+                        </div>
+                        <div class="col-12 my-4">
+                            <h5 class="text-primary font-weight-bold">Permissões</h5>
+                        </div>
+                        <div class="input-group">
 
+                        </div>
+                        <div class="col-12 d-flex justify-content-center align-items-center my-2">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm cad_new_user">Salvar</a>
+                        </div>
                     </div>
-
                 </form>
-
-                <div class="clearfix"></div>
-
             </div>
         </div>
     </div>
-
-    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content animated bounceInRight">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-                    <i class="fa fa-lock modal-icon"></i>
-                    <h4 class="modal-title">Permissões</h4>
-                    <small class="font-bold">Conheça as permissões do sistema.</small>
-                </div>
-                <div class="modal-body">
-                    <ol>
-                        <li><b>Administração:</b> Gestão da loja junto ao Eldorado.</li>
-                        <li><b>Caixa:</b> Abrir e fechar caixas.</li>
-                        <li><b>Categorias:</b> Gerenciar categorias de produtos.</li>
-                        <li><b>Configurações:</b> Configurações gerais da loja (sistema e pedidos online).</li>
-                        <li><b>Mesas:</b> Gerenciar numeração das mesas atendidas.</li>
-                        <li><b>Mesas - Atendimento:</b> Usuários que poderão registrar pedidos nas mesas.</li>
-                        <li><b>Pedidos:</b> Visualizar pedidos realizados.</li>
-                        <li><b>Pedidos - Cancelar:</b> Usuários que podem cancelar pedidos.</li>
-                        <li><b>Preparo:</b> Usuários que podem confirmar a elaboração do pedido.</li>
-                        <li><b>Produtos:</b> Gerenciar produtos e estoque.</li>
-                        <li><b>Reportar erros:</b> Usuários que podem reportar erro do sistema à gestão do Eldorado.</li>
-                        <li><b>Usuários:</b> Gerenciar usuários do sistema.</li>
-                        <li><b>Venda:</b> Usuários que podem realizar vendas.</li>
-                        <li><b>Venda - Desconto:</b> Usuários que podem conceder descontos.</li>
-                    </ol>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        $('form').parsley();
-        $('.select2').select2();
-        $('.telefone').mask("(99) 9999-9999?9").focusout(function (event) {
-            var target, phone, element;
-            target = (event.currentTarget) ? event.currentTarget : event.srcElement;
-            phone = target.value.replace(/\D/g, '');
-            element = $(target);
-            element.unmask();
-            if(phone.length > 10) {
-                element.mask("(99) 99999-999?9");
-            } else {
-                element.mask("(99) 9999-9999?9");
-            }
-        });
-    </script>
+</div>
 
 <?php
 require APP . 'view/admin/_templates/endFile.php';
