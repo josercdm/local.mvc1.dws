@@ -32,8 +32,8 @@ require APP . 'view/admin/_templates/initFile.php';
                 <div class="table-responsive">
                     <table id="tableUsers" class="display compact stripe" style="width:100%">
                         <thead>
-                            <th>Ações</th>
                             <th> </th>
+                            <th> Ações </th>
                             <th>Nome</th>
                             <th>E-mail</th>
                             <th>Usuário</th>
@@ -63,7 +63,7 @@ require APP . 'view/admin/_templates/initFile.php';
                             foreach ($response as $user) {
                             ?>
                                 <tr>
-                                    <td class="px-5"><a href="/admin/usuario/editar/<?= $user['id'] ?>" class="btn btn-primary btn-sm btn-block"><i class="fa fa-edit"></i></a></td>
+                                                                       
                                     <td><img src="/<?= $user['imagem'] ?>" class="img-circle" height="50px"></td>
                                     <td><?= $user['nome'] ?></td>
                                     <td><?= $user['email'] ?></td>
@@ -88,6 +88,10 @@ require APP . 'view/admin/_templates/initFile.php';
                                     <td><?= $user['data_cadastro'] ?></td>
                                     <td><?= $user['data_alteracao'] ?></td>
                                     <td><?= $user['status'] ?></td>
+                                    <td>
+                                        <a href="/admin/usuario/editar/<?= $user['id'] ?>" class="btn btn-primary btn-sm btn-block"><i class="fa fa-edit"></i></a>
+                                        <a href="javascript:(0);" class="btn btn-primary btn-sm btn-block del-user"><i class="fa fa-trash"></i></a>
+                                    </td>
                                 </tr>
 
                             <?php
