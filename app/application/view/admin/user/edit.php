@@ -1,5 +1,6 @@
 <?php
 $title = 'Criar Novo Usuário';
+$menuActive = 'user';
 $css = [];
 $script = [
     'assets/adminLTE/js/editUser/edit.js'

@@ -1,5 +1,6 @@
 <?php
 $title = ' - Configurações do Sistema';
+$menuActive = 'config';
 $css = [];
 $script = [
     'assets/admin/js/plugins/dataTables/datatables.min.js',

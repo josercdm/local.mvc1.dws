@@ -28,7 +28,7 @@ class ConfiguracaoController
     }
 
 
-    public function update()
+    /* public function update()
     {
         $model = New Configuracao();
         if(@$_SESSION['acesso'] == 'Administrador') $_POST['id_update_user'] = $_SESSION['id_user'];
@@ -37,7 +37,7 @@ class ConfiguracaoController
         } else {
             Helper::view($this->baseView.'/edit/'.$_POST['id']);
         }
-    }
+    } */
 
     
 

@@ -29,14 +29,32 @@
     <link rel="stylesheet" href="/assets/adminLTE/summernote/summernote-bs4.min.css">
 
     <link rel="stylesheet" href="/assets/adminLTE/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="/assets/adminLTE/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="/assets/adminLTE/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/adminLTE/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/adminLTE/datatables-buttons/css/buttons.bootstrap4.min.css">
 
     <?php
     foreach ($css as $file) {
         if (file_exists($file)) {
             echo '<link href="/' . $file . '" rel="stylesheet">';
         }
+    }
+
+    switch ($menuActive) {
+        case 'panel':
+            $panel = 'active';
+            $userMenu = '';
+            $configMenu = '';
+            break;
+        case 'user':
+            $panel = '';
+            $userMenu = 'active';
+            $configMenu = '';
+            break;
+        case 'config':
+            $panel = '';
+            $userMenu = '';
+            $configMenu = 'active';
+            break;
     }
     ?>
 </head>
@@ -197,7 +215,7 @@
                                     <img src="/<?= $_SESSION['imagem'] ?>" class="img-circle" height="48px" alt="User Image">
                                     <p>
                                         <?= $_SESSION['nome'] ?>
-                                        
+
                                     </p>
                                     <i class="right fas fa-angle-down"></i>
                                 </div>
@@ -232,7 +250,7 @@
                         <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
-                            <a href="/admin/inicio" class="nav-link active">
+                            <a href="/admin/inicio" class="nav-link <?= $panel ?>">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Painel de controle
@@ -240,7 +258,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/admin/configuracoes" class="nav-link">
+                            <a href="/admin/configuracoes" class="nav-link <?= $configMenu ?>">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Configuração
@@ -248,7 +266,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/admin/usuario" class="nav-link">
+                            <a href="/admin/usuario" class="nav-link <?= $userMenu ?>">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Usuários

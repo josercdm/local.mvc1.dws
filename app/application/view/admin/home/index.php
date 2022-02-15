@@ -1,5 +1,6 @@
 <?php
 $title = ' - Painel de Controle';
+$menuActive = 'panel';
 $css = [];
 $script = [];
 require APP . 'view/admin/_templates/initFile.php';

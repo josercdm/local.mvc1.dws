@@ -1,5 +1,6 @@
 <?php
 $title = '';
+$menuActive = 'user';
 $css = [];
 $script = [];
 require APP . 'view/admin/_templates/initFile.php';

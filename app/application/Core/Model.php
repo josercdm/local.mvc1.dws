@@ -3,6 +3,7 @@
 namespace SmartSolucoes\Core;
 
 use PDO;
+use PDOException;
 
 class Model
 {
@@ -100,7 +101,7 @@ class Model
         $sql = "UPDATE " . $table . " SET status = " . $status . " WHERE id = :id LIMIT 1";
         $query = $this->PDO()->prepare($sql);
         $query->execute([':id' => $id]);
-    }
+    }*/
 
     public function all($table, $order = 'id', $field = false, $value = false)
     {
@@ -121,7 +122,7 @@ class Model
 
     
 
-    public function defineOrder($table, $id, $order, $id_categoria = false, $id_cadastro = false)
+   /*  public function defineOrder($table, $id, $order, $id_categoria = false, $id_cadastro = false)
     {
 
         $where = '';
@@ -131,7 +132,7 @@ class Model
         $PDO = $this->PDO();
         $PDO->query("SET @a := -1; UPDATE " . $table . " SET ordem = @a := @a+1 WHERE 1=1 " . $where . " AND id <> " . $id . " AND (ordem <= " . $order . " OR ordem IS NULL) ORDER BY ordem;");
         $PDO->query("SET @a := " . $order . "; UPDATE " . $table . " SET ordem = @a := @a+1 WHERE 1=1 " . $where . " AND id <> " . $id . " AND (ordem >= " . $order . " OR ordem IS NULL) ORDER BY ordem;");
-    }*/
+    } */
 
     public function validaCPF($cpf) {
  
