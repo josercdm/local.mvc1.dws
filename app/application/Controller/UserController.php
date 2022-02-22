@@ -15,19 +15,48 @@ class UserController
     public function index()
     {
         $model = new User();
-        $response = $model->read($this->table, 'id DESC');
+        $response['user'] = $model->readPermissao($this->table, 'id DESC');
+        foreach ($response['user'] as $user) {
+            $response['permissao'] = $model->readPermissaoId($user['id']);
+        }
         Helper::view($this->baseView . '/index', $response);
     }
 
     public function newUser()
     {
-        Helper::view($this->baseView . '/create');
+        $model = new User();
+        $response['supervisores'] = $model->readPermissao();
+        Helper::view($this->baseView . '/create', $response);
     }
 
     public function viewEdit($param)
     {
+        $model = new User();
+        $response['data'] = $model->readPermissaoId($param['id']);
+        $response['supervisores'] = $model->readSupervisores();
+        $response['supervisor'] = isset($response['data']['pm_supervisor']) && $response['data']['pm_supervisor'] == 1 ? 'checked' : '';
+        $response['viewer'] = isset($response['data']['viewer']) && $response['data']['viewer'] == 1 ? 'checked' : '';
+        $response['edit'] = isset($response['data']['edit']) && $response['data']['edit'] == 1 ? 'checked' : '';
+        $response['del'] = isset($response['data']['del']) && $response['data']['del'] == 1 ? 'checked' : '';
 
-        Helper::view($this->baseView . '/edit');
+        if ($response['data']['us_supervisor'] != null) {
+            $response['name_supervisor'] = $response['data']['us_supervisor'];
+            $response['value_supervisor'] = $response['data']['us_supervisor'];
+        } else {
+            $response['name_supervisor'] = 'Selecione um supervisor';
+            $response['value_supervisor'] = '';
+        }
+
+        switch ($response['data']['status']) {
+            case 1:
+                $response['status'] = 'Ativo';
+                break;
+            case 0:
+                $response['status'] = 'Inativo';
+                break;
+        }
+
+        Helper::view($this->baseView . '/edit', $response);
     }
 
     /* public function viewNew()

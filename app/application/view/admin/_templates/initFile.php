@@ -256,21 +256,21 @@
                                     Painel de controle
                                 </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/admin/configuracoes" class="nav-link <?= $configMenu ?>">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Configuração
-                                </p>
-                            </a>
-                        </li>
+                        </li>                        
                         <li class="nav-item">
                             <a href="/admin/usuario" class="nav-link <?= $userMenu ?>">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Usuários
                                     <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/configuracoes" class="nav-link <?= $configMenu ?>">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Configuração
                                 </p>
                             </a>
                         </li>

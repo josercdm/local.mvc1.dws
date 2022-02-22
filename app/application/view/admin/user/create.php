@@ -2,9 +2,9 @@
 $title = 'Criar Novo Usuário';
 $menuActive = 'user';
 $css = [];
-$script = [        
+$script = [
     'assets/adminLTE/js/editUser/edit.js'
-    
+
 ];
 require APP . 'view/admin/_templates/initFile.php';
 ?>
@@ -41,7 +41,8 @@ require APP . 'view/admin/_templates/initFile.php';
                                 <label for="u_status">Status</label><br>
                                 <select name="u_status" id="u_status" class="form-control">
                                     <option value="">Selecione um status</option>
-                                    <option value="1">Selecione um status</option>
+                                    <option value="0">Inativo</option>
+                                    <option value="1">Ativo</option>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -65,6 +66,17 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </select>
                             </div>
                             <div class="col-sm-12 col-md-4">
+                                <label for="u_supervisor">Supervisor</label><br>
+                                <select name="u_supervisor" id="u_supervisor" class="form-control">
+                                    <option value="">Selecione um supervisor</option>
+                                    <?php
+                                    foreach ($response['supervisores'] as $supervisor) {
+                                    ?>
+                                        <option value="<?= $supervisor['nome'] ?>"><?= $supervisor['nome'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
                                 <label for="u_meta">Meta</label><br>
                                 <input type="text" name="u_meta" id="u_meta" class="form-control" placeholder="10.000,00" required>
                             </div>
@@ -76,13 +88,7 @@ require APP . 'view/admin/_templates/initFile.php';
                                 <label for="u_comissao_b_meta">Comissão Bater Meta (%)</label><br>
                                 <input type="text" name="u_comissao_b_meta" id="u_comissao_b_meta" class="form-control" placeholder="10%" required>
                             </div>
-                            <div class="col-sm-12 col-md-4">
-                                <label for="u_supervisor">Comissão Bater Meta (%)</label><br>
-                                <select name="u_supervisor" id="u_supervisor" class="form-control">
-                                    <option value="">Selecione um supervisor</option>
-                                    <option value="1">1</option>
-                                </select>
-                            </div>
+
                         </div>
 
                         <div class="col-12 my-4">
@@ -167,7 +173,31 @@ require APP . 'view/admin/_templates/initFile.php';
                         <div class="col-12 my-4">
                             <h5 class="text-primary font-weight-bold">Permissões</h5>
                         </div>
-                        <div class="input-group">
+                        <div class="col-12">
+                            <div class="row">
+
+                                <div class="col-4">
+                                    <div class="card-body">
+                                        <h6 class="text-bold">Usuário</h6>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" type="checkbox" name="cl_permissao_viewer" id="cl_permissao_viewer">
+                                            <label for="cl_permissao_viewer" class="custom-control-label">Ver</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" type="checkbox" name="cl_permissao_edit" id="cl_permissao_edit">
+                                            <label for="cl_permissao_edit" class="custom-control-label">Editar</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" type="checkbox" name="cl_permissao_del" id="cl_permissao_del">
+                                            <label for="cl_permissao_del" class="custom-control-label">Excluir</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" type="checkbox" name="cl_permissao_sup" id="cl_permissao_sup">
+                                            <label for="cl_permissao_sup" class="custom-control-label">Supervisor?</label>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
 
                         </div>
                         <div class="col-12 d-flex justify-content-center align-items-center my-2">

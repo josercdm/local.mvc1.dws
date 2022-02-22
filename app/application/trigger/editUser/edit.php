@@ -7,8 +7,9 @@ use SmartSolucoes\Model\User;
 use SmartSolucoes\Core\Model;
 
 if (isset($_POST['trigger'])) {
-    $form = filter_input(INPUT_POST, 'data', FILTER_DEFAULT);
+    $form = filter_input(INPUT_POST, 'form', FILTER_DEFAULT);
     parse_str($form, $retorno);
+    $permissao = $_POST['permissao'];
 
     $user = new User();
     $model = new Model();
@@ -19,8 +20,78 @@ if (isset($_POST['trigger'])) {
         $response['status'] = 'Número de CPF inválido.';
     } else {
         $retorno['password'] = password_hash($retorno['u_pass'], PASSWORD_BCRYPT);
-        $response['status'] = $user->cadastrar($retorno);
+        $param = array();
+        $lastId = $user->cadastrar($retorno);
+
+        if ($permissao != null) {
+
+            $param['viewer'] = 0;
+            $param['edit'] = 0;
+            $param['del'] = 0;
+            $param['supervisor'] = 0;
+            foreach ($permissao as $rtn) {
+                $pm = json_decode($rtn, true);
+
+                $param[$pm['permissao']] = $pm['value'];
+            }
+            $param['userid'] = $lastId;
+            $response['status'] = $user->createPermissao($param);
+        }
     }
+    echo json_encode($response);
+}
+
+if (isset($_POST['edit'])) {
+    $form = filter_input(INPUT_POST, 'form', FILTER_DEFAULT);
+    parse_str($form, $retorno);
+    $permissao = $_POST['permissao'];
+
+    $user = new User();
+    $model = new Model();
+
+    if (!$model->validaCPF($retorno['u_cpf'])) {
+        $response['status'] = 'Número de CPF inválido.';
+    } else {        
+        $param = array();
+        $user->updateUser($retorno);
+
+        if ($permissao != null) {
+
+            $param['viewer'] = 0;
+            $param['edit'] = 0;
+            $param['del'] = 0;
+            $param['supervisor'] = 0;
+            foreach ($permissao as $rtn) {
+                $pm = json_decode($rtn, true);
+
+                $param[$pm['permissao']] = $pm['value'];
+            }
+            $param['userid'] = $retorno['userid'];
+            $response['status'] = $user->updatePermissao($param);
+        }
+    }
+    echo json_encode($response);
+}
+
+if (isset($_POST['updateStatus'])) {
+    $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_NUMBER_INT);
+    $userid = filter_input(INPUT_POST, 'userid', FILTER_SANITIZE_NUMBER_INT);
+
+    $user  = new User();
+
+    $response['retorno'] = $user->updateStatus($status, $userid);
+    $response['status'] = $status;
+    $response['userid'] = $userid;
+
+    echo json_encode($response);
+}
+
+if (isset($_POST['deleteUser'])) {
+    $userid = filter_input(INPUT_POST, 'userid', FILTER_SANITIZE_NUMBER_INT);
+
+    $user  = new User();
+
+    $response['status'] = $user->deleteUser($userid);    
 
     echo json_encode($response);
 }

@@ -12,9 +12,9 @@ class Auth extends Model
     {
         $PDO = $this->PDO();
         $query = $PDO->prepare("
-            SELECT u.nome, u.id, u.acesso, u.imagem, u.senha, u.status, u.email
+            SELECT u.nome, u.id, u.acesso, u.user, u.imagem, u.senha, u.status, u.email
             FROM user u
-            WHERE u.email = :login 
+            WHERE u.user = :login 
             LIMIT 1");
         $query->execute([':login'=>$_POST['login']]);
         $result = $query->fetch();

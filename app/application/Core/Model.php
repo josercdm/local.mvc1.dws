@@ -34,29 +34,29 @@ class Model
         return $query->fetch();
     }
 
-    /* public function create($table, $fields, $exception = [])
-    {
-        $PDO = $this->PDO();
-        $set = [];
-        $setValue = [];
-        foreach ($fields as $field => $value) {
-            if (!in_array($field, $exception)) {
-                $set[] = $field . ' = :' . $field;
-                $setValue[':' . $field] = $value;
-            }
-        }
-        if (@$_SESSION['id_user']) $setAdmin = "id_update_user = '" . (@$_SESSION['id_user'] ? @$_SESSION['id_user'] : 0) . "', ";
-        $sql = "INSERT INTO " . $table . " SET " . @$setAdmin . implode(', ', $set);
-        $query = $PDO->prepare($sql);
-        if ($query->execute($setValue)) {
-            $return = $PDO->lastInsertId();
-        } else {
-            $return = false;
-        }
-        return $return;
-    }
+    // public function create($table, $fields, $exception = [])
+    // {
+    //     $PDO = $this->PDO();
+    //     $set = [];
+    //     $setValue = [];
+    //     foreach ($fields as $field => $value) {
+    //         if (!in_array($field, $exception)) {
+    //             $set[] = $field . ' = :' . $field;
+    //             $setValue[':' . $field] = $value;
+    //         }
+    //     }
+    //     if (@$_SESSION['id_user']) $setAdmin = "id_update_user = '" . (@$_SESSION['id_user'] ? @$_SESSION['id_user'] : 0) . "', ";
+    //     $sql = "INSERT INTO " . $table . " SET " . @$setAdmin . implode(', ', $set);
+    //     $query = $PDO->prepare($sql);
+    //     if ($query->execute($setValue)) {
+    //         $return = $PDO->lastInsertId();
+    //     } else {
+    //         $return = false;
+    //     }
+    //     return $return;
+    // }
 
-    public function save($table, $fields, $exception = [])
+    /*public function save($table, $fields, $exception = [])
     {
         $set = [];
         $setValue = [];
@@ -101,7 +101,7 @@ class Model
         $sql = "UPDATE " . $table . " SET status = " . $status . " WHERE id = :id LIMIT 1";
         $query = $this->PDO()->prepare($sql);
         $query->execute([':id' => $id]);
-    }*/
+    }*/    
 
     public function all($table, $order = 'id', $field = false, $value = false)
     {
@@ -120,9 +120,9 @@ class Model
         return $query->fetchAll();
     }
 
-    
 
-   /*  public function defineOrder($table, $id, $order, $id_categoria = false, $id_cadastro = false)
+
+    /*  public function defineOrder($table, $id, $order, $id_categoria = false, $id_cadastro = false)
     {
 
         $where = '';
@@ -134,21 +134,22 @@ class Model
         $PDO->query("SET @a := " . $order . "; UPDATE " . $table . " SET ordem = @a := @a+1 WHERE 1=1 " . $where . " AND id <> " . $id . " AND (ordem >= " . $order . " OR ordem IS NULL) ORDER BY ordem;");
     } */
 
-    public function validaCPF($cpf) {
- 
+    public function validaCPF($cpf)
+    {
+
         // Extrai somente os números
-        $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
-         
+        $cpf = preg_replace('/[^0-9]/is', '', $cpf);
+
         // Verifica se foi informado todos os digitos corretamente
         if (strlen($cpf) != 11) {
             return false;
         }
-    
+
         // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
         if (preg_match('/(\d)\1{10}/', $cpf)) {
             return false;
         }
-    
+
         // Faz o calculo para validar o CPF
         for ($t = 9; $t < 11; $t++) {
             for ($d = 0, $c = 0; $c < $t; $c++) {
@@ -160,6 +161,5 @@ class Model
             }
         }
         return true;
-    
-    } 
+    }
 }

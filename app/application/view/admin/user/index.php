@@ -2,7 +2,9 @@
 $title = '';
 $menuActive = 'user';
 $css = [];
-$script = [];
+$script = [
+    'assets/adminLTE/js/editUser/edit.js'
+];
 require APP . 'view/admin/_templates/initFile.php';
 ?>
 
@@ -27,80 +29,85 @@ require APP . 'view/admin/_templates/initFile.php';
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a href="/admin/usuario/novo" class="btn btn-primary btn-sm">Novo</a>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="tableUsers" class="display compact stripe" style="width:100%">
-                        <thead>
-                            <th> </th>
-                            <th> Ações </th>
-                            <th>Nome</th>
-                            <th>E-mail</th>
-                            <th>Usuário</th>
-                            <th>Data/Nascimento</th>
-                            <th>CPF</th>
-                            <th>RG</th>
-                            <th>Telefone</th>
-                            <th>Celular</th>
-                            <th>CEP</th>
-                            <th>Endereço</th>
-                            <th>Número</th>
-                            <th>Complemento</th>
-                            <th>Bairro</th>
-                            <th>Cidade/UF</th>
-                            <th>Banco</th>
-                            <th>Agência</th>
-                            <th>Conta</th>
-                            <th>Operador</th>
-                            <th>Tipo/Conta</th>
-                            <th>Sessão</th>
-                            <th>Data/Cadastro</th>
-                            <th>Ultima Modificação</th>
-                            <th>Status</th>
-                        </thead>
-                        <tbody>
-                            <?php
-                            foreach ($response as $user) {
-                            ?>
-                                <tr>
-                                                                       
-                                    <td><img src="/<?= $user['imagem'] ?>" class="img-circle" height="50px"></td>
-                                    <td><?= $user['nome'] ?></td>
-                                    <td><?= $user['email'] ?></td>
-                                    <td><?= $user['user'] ?></td>
-                                    <td><?= $user['data_nascimento'] ?></td>
-                                    <td><?= $user['cpf'] ?></td>
-                                    <td><?= $user['rg'] ?></td>
-                                    <td><?= $user['telefone'] ?></td>
-                                    <td><?= $user['celular'] ?></td>
-                                    <td><?= $user['cep'] ?></td>
-                                    <td><?= $user['endereco'] ?></td>
-                                    <td><?= $user['numero'] ?></td>
-                                    <td><?= $user['complemento'] ?></td>
-                                    <td><?= $user['bairro'] ?></td>
-                                    <td><?= $user['cidade'] ?>/<?= $user['estado'] ?></td>
-                                    <td><?= $user['banco'] ?></td>
-                                    <td><?= $user['agencia'] ?></td>
-                                    <td><?= $user['conta'] ?></td>
-                                    <td><?= $user['op_vr'] ?></td>
-                                    <td><?= $user['tipo_conta'] ?></td>
-                                    <td><?= $user['session'] ?></td>
-                                    <td><?= $user['data_cadastro'] ?></td>
-                                    <td><?= $user['data_alteracao'] ?></td>
-                                    <td><?= $user['status'] ?></td>
-                                    <td>
-                                        <a href="/admin/usuario/editar/<?= $user['id'] ?>" class="btn btn-primary btn-sm btn-block"><i class="fa fa-edit"></i></a>
-                                        <a href="javascript:(0);" class="btn btn-primary btn-sm btn-block del-user"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                <h3 class="card-title"><a href="/admin/usuario/novo" class="btn btn-primary btn-sm">Novo</a></h3>
+                <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover table-sm text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Usuário</th>
+                            <th>E-mail</th>
+                            <th>CPF</th>
+                            <th>Celular</th>
+                            <th>Supervisor</th>
+                            <th>Status</th>
+                            <th> Ações </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($response['user'] as $user) {
+                            switch ($user['status']) {
+                                case 1:
+                                    $status = 'Ativo';
+                                    $color = 'custom-switch-on-success';
+                                    $checked = 'checked';
+                                    break;
+                                case 0:
+                                    $status = 'Inativo';
+                                    $color = 'custom-switch-off-danger';
+                                    $checked = '';
+                                    break;
+                            }
+
+                            switch ($user['pm_supervisor']) {
+                                case 1:
+                                    $supervisor = 'Sim';
+                                    break;
+                                case 0:
+                                    $supervisor = 'Não';
+                                    break;
+                            }
+
+                        ?>
+                            <tr class="text-sm">
+                                <td><?= $user['nome'] ?></td>
+                                <td><?= $user['user'] ?></td>
+                                <td><?= $user['email'] ?></td>
+                                <td><?= $user['cpf'] ?></td>
+                                <td><?= $user['celular'] ?></td>
+                                <td><?= $supervisor ?></td>
+                                <td>
+                                    <div class="custom-control custom-switch  ">
+                                        <input type="checkbox" class="custom-control-input <?= $color ?>" id="u_status_sw_<?= $user['id_user'] ?>" name="u_status_sw" value="<?= $user['id_user'] ?>" <?= $checked ?>>
+                                        <label class="custom-control-label" for="u_status_sw_<?= $user['id_user'] ?>"><?= $status ?></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <a href="/admin/usuario/editar/<?= $user['id_user'] ?>" class="btn btn-primary btn-sm mr-2 "><i class="fa fa-edit"></i></a>
+                                        <a href="javascript:(0);" class="btn btn-danger btn-sm del-user" data-userid="<?= $user['id_user'] ?>"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
