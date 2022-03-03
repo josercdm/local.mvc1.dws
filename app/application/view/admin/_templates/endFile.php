@@ -44,6 +44,8 @@
 <script src="/assets/adminLTE/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/assets/adminLTE/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/assets/adminLTE/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="/assets/adminLTE/select2/js/select2.min.js"></script>
+<script src="/assets/adminLTE/select2-bootstrap4-theme/select2-bootstrap4.min.css"></script>
 <!-- ChartJS -->
 <script src="/assets/adminLTE/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->

@@ -21,6 +21,7 @@ if (isset($_POST['trigger'])) {
     } else {
         $retorno['password'] = password_hash($retorno['u_pass'], PASSWORD_BCRYPT);
         $param = array();
+
         $lastId = $user->cadastrar($retorno);
 
         if ($permissao != null) {
@@ -29,9 +30,15 @@ if (isset($_POST['trigger'])) {
             $param['edit'] = 0;
             $param['del'] = 0;
             $param['supervisor'] = 0;
+            $param['administrador'] = 0;
+            $param['gerente'] = 0;
+            $param['financeiro'] = 0;
+            $param['fotografo'] = 0;
+            $param['suporte'] = 0;
+            $param['vendedor'] = 0;
+            $param['pos_venda'] = 0;
             foreach ($permissao as $rtn) {
                 $pm = json_decode($rtn, true);
-
                 $param[$pm['permissao']] = $pm['value'];
             }
             $param['userid'] = $lastId;
@@ -51,7 +58,7 @@ if (isset($_POST['edit'])) {
 
     if (!$model->validaCPF($retorno['u_cpf'])) {
         $response['status'] = 'Número de CPF inválido.';
-    } else {        
+    } else {
         $param = array();
         $user->updateUser($retorno);
 
@@ -61,9 +68,15 @@ if (isset($_POST['edit'])) {
             $param['edit'] = 0;
             $param['del'] = 0;
             $param['supervisor'] = 0;
+            $param['administrador'] = 0;
+            $param['gerente'] = 0;
+            $param['financeiro'] = 0;
+            $param['fotografo'] = 0;
+            $param['suporte'] = 0;
+            $param['vendedor'] = 0;
+            $param['pos_venda'] = 0;
             foreach ($permissao as $rtn) {
                 $pm = json_decode($rtn, true);
-
                 $param[$pm['permissao']] = $pm['value'];
             }
             $param['userid'] = $retorno['userid'];
@@ -91,7 +104,7 @@ if (isset($_POST['deleteUser'])) {
 
     $user  = new User();
 
-    $response['status'] = $user->deleteUser($userid);    
+    $response['status'] = $user->deleteUser($userid);
 
     echo json_encode($response);
 }

@@ -34,7 +34,17 @@ class UserController
         $model = new User();
         $response['data'] = $model->readPermissaoId($param['id']);
         $response['supervisores'] = $model->readSupervisores();
+
+        /** checkboxes para os niveis de acesso. */
         $response['supervisor'] = isset($response['data']['pm_supervisor']) && $response['data']['pm_supervisor'] == 1 ? 'checked' : '';
+        $response['gerente'] = isset($response['data']['gerente']) && $response['data']['gerente'] == 1 ? 'checked' : '';
+        $response['financeiro'] = isset($response['data']['financeiro']) && $response['data']['financeiro'] == 1 ? 'checked' : '';
+        $response['fotografo'] = isset($response['data']['fotografo']) && $response['data']['fotografo'] == 1 ? 'checked' : '';
+        $response['suporte'] = isset($response['data']['suporte']) && $response['data']['suporte'] == 1 ? 'checked' : '';
+        $response['vendedor'] = isset($response['data']['vendedor']) && $response['data']['vendedor'] == 1 ? 'checked' : '';
+        $response['pos_venda'] = isset($response['data']['pos_venda']) && $response['data']['pos_venda'] == 1 ? 'checked' : '';
+
+        /** checkboxes para privilégios */
         $response['viewer'] = isset($response['data']['viewer']) && $response['data']['viewer'] == 1 ? 'checked' : '';
         $response['edit'] = isset($response['data']['edit']) && $response['data']['edit'] == 1 ? 'checked' : '';
         $response['del'] = isset($response['data']['del']) && $response['data']['del'] == 1 ? 'checked' : '';

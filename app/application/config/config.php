@@ -1,4 +1,6 @@
 <?php
+header('Access-Control-Allow-Origin: https://receitaws.com.br/');
+
 define('DB_TYPE', 'mysql');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'mvc1');

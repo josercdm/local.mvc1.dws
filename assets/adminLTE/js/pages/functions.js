@@ -118,15 +118,11 @@ $(function () {
                 "last": "Último",
                 "next": "Próximo",
                 "previous": "Anterior"
-            },
-            "buttons": {
-                "copy": "Copiar",
-                "print": "Imprimir"
-            },
+            },            
             "emptyTable": "Nenhum dado à exibir!",
         }
 
-    }).buttons().container().appendTo('#tableConfiguracoes_wrapper .col-md-6:eq(0)');
+    });
 
     /**
      * configurações para a tabela na pagina usuarios
@@ -153,6 +149,9 @@ $(function () {
 
 });
 
+$('.select2bs4').select2({
+    theme: 'bootstrap4'
+  })
 /**
  * 
  * @param {titulo do response} title 

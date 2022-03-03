@@ -11,11 +11,14 @@ class User extends Model
 
   public function cadastrar(array $data)
   {
-    $create = $this->PDO()->prepare("INSERT INTO user (
+    $create = $this->PDO()->prepare("INSERT INTO user (     
       acesso, 
       nome, 
       user,
       supervisor,
+      meta,
+      comissao,
+      com_bater_meta,
       data_nascimento, 
       cpf, 
       rg, 
@@ -34,11 +37,14 @@ class User extends Model
       op_vr,
       tipo_conta, 
       email, 
-      senha) VALUES (
-        :acesso,
+      senha) VALUES (  
+        :acesso,      
         :nome,
         :user,
         :supervisor,
+        :meta,
+        :comissao,
+        :com_bater_meta,
         :data_nascimento,
         :cpf,
         :rg,
@@ -59,10 +65,13 @@ class User extends Model
         :email,
         :senha)");
 
-    $create->bindValue(':acesso', $data['u_type_user'], PDO::PARAM_STR);
     $create->bindValue(':nome', $data['u_nome'], PDO::PARAM_STR);
+    $create->bindValue(':acesso', $data['u_type_user'], PDO::PARAM_STR);
     $create->bindValue(':user', $data['u_user'], PDO::PARAM_STR);
     $create->bindValue(':supervisor', $data['u_supervisor'], PDO::PARAM_STR);
+    $create->bindValue(':meta', $data['u_meta'], PDO::PARAM_STR);
+    $create->bindValue(':comissao', $data['u_comissao'], PDO::PARAM_STR);
+    $create->bindValue(':com_bater_meta', $data['u_comissao_b_meta'], PDO::PARAM_STR);
     $create->bindValue(':data_nascimento', $data['u_nasc'], PDO::PARAM_STR);
     $create->bindValue(':cpf', $data['u_cpf'], PDO::PARAM_STR);
     $create->bindValue(':rg', null, PDO::PARAM_STR);
@@ -91,18 +100,39 @@ class User extends Model
   {
     $create = $this->PDO()->prepare("INSERT INTO permissao (
       userid, 
-      supervisor, 
+      supervisor,
+      administrador,
+      gerente,
+      financeiro,
+      fotografo,
+      suporte,
+      vendedor,
+      pos_venda, 
       viewer,
       edit,
       del) VALUES (
         :userid,
         :supervisor,
+        :administrador,
+        :gerente,
+        :financeiro,
+        :fotografo,
+        :suporte,
+        :vendedor,
+        :pos_venda,
         :viewer,
         :edit,
         :del)");
 
     $create->bindValue(':userid', $data['userid'], PDO::PARAM_INT);
     $create->bindValue(':supervisor', $data['supervisor'], PDO::PARAM_INT);
+    $create->bindValue(':administrador', $data['administrador'], PDO::PARAM_INT);
+    $create->bindValue(':gerente', $data['gerente'], PDO::PARAM_INT);
+    $create->bindValue(':financeiro', $data['financeiro'], PDO::PARAM_INT);
+    $create->bindValue(':fotografo', $data['fotografo'], PDO::PARAM_INT);
+    $create->bindValue(':suporte', $data['suporte'], PDO::PARAM_INT);
+    $create->bindValue(':vendedor', $data['vendedor'], PDO::PARAM_INT);
+    $create->bindValue(':pos_venda', $data['pos_venda'], PDO::PARAM_INT);
     $create->bindValue(':viewer', $data['viewer'], PDO::PARAM_INT);
     $create->bindValue(':edit', $data['edit'], PDO::PARAM_INT);
     $create->bindValue(':del', $data['del'], PDO::PARAM_INT);
@@ -193,6 +223,13 @@ class User extends Model
     $query = $this->PDO()->prepare("UPDATE permissao SET 
     
       supervisor = :supervisor,
+      administrador = :administrador,
+      gerente = :gerente,
+      financeiro = :financeiro,
+      fotografo = :fotografo,
+      suporte = :suporte,
+      vendedor = :vendedor,
+      pos_venda = :pos_venda,
       viewer = :viewer,
       edit = :edit,
       del = :del     
@@ -201,6 +238,13 @@ class User extends Model
 
     $query->bindValue(':userid', $data['userid'], PDO::PARAM_INT);
     $query->bindValue(':supervisor', $data['supervisor'], PDO::PARAM_INT);
+    $query->bindValue(':administrador', $data['administrador'], PDO::PARAM_INT);
+    $query->bindValue(':gerente', $data['gerente'], PDO::PARAM_INT);
+    $query->bindValue(':financeiro', $data['financeiro'], PDO::PARAM_INT);
+    $query->bindValue(':fotografo', $data['fotografo'], PDO::PARAM_INT);
+    $query->bindValue(':suporte', $data['suporte'], PDO::PARAM_INT);
+    $query->bindValue(':vendedor', $data['vendedor'], PDO::PARAM_INT);
+    $query->bindValue(':pos_venda', $data['pos_venda'], PDO::PARAM_INT);
     $query->bindValue(':viewer', $data['viewer'], PDO::PARAM_INT);
     $query->bindValue(':edit', $data['edit'], PDO::PARAM_INT);
     $query->bindValue(':del', $data['del'], PDO::PARAM_INT);

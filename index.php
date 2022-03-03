@@ -43,7 +43,7 @@ $Route->group2('ajax', function () {
 
 $Route->group('admin', function ($Route) {
 
-    if (@$_SESSION['acesso'] == 'Administrador' || @$_SESSION['acesso'] == 'Vendedor' || @$_SESSION['acesso'] == 'Financeiro') {
+    if (@$_SESSION['acesso'] == 'Administrador' || @$_SESSION['acesso'] == 'Usuario' || @$_SESSION['acesso'] == 'Financeiro') {
 
         $Route->get('', 'HomeController@vazio'); // Mudar no Controller caso tenha acessos diferentes
         $Route->get('inicio', 'HomeController@admin');
@@ -59,6 +59,10 @@ $Route->group('admin', function ($Route) {
 
         $Route->group('configuracoes', function ($Route) {
             $Route->crud('configuracao');
+        });
+
+        $Route->group('clientes', function ($Route) {
+            $Route->crud('cliente');
         });
     } else {
         \SmartSolucoes\Libs\Helper::view('admin/auth/login');

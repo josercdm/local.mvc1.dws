@@ -10,7 +10,7 @@ class HomeController
 
     public function vazio()
     {
-        if(@$_SESSION['acesso'] == 'Administrador' || @$_SESSION['acesso'] == 'Vendedor' || @$_SESSION['acesso'] == 'Financeiro') {
+        if(@$_SESSION['acesso'] == 'Administrador' || @$_SESSION['acesso'] == 'Usuario' || @$_SESSION['acesso'] == 'Financeiro') {
         header('location: ' . URL_ADMIN . '/inicio');
         } else {
             Helper::view('admin/auth/login');

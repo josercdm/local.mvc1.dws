@@ -110,7 +110,6 @@ class Route
 
     function crud($controller)
     {
-        print_r($controller);
         switch ($this->route) {
             case '':
                 $this->get('', ucfirst($controller) . 'Controller@index');

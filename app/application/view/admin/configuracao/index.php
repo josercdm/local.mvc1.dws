@@ -28,9 +28,9 @@ require APP . 'view/admin/_templates/initFile.php';
 
 <div class="row">
     <div class="table-responsive">
-        <div id="btnConfiguracoes">
+        <!-- <div id="btnConfiguracoes">
             
-        </div>
+        </div> -->
         <table class="table table-striped table-bordered table-hover" id="tableConfiguracoes">
             <thead>
                 <tr>

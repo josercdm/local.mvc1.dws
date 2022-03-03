@@ -7,7 +7,7 @@
     <title><?= APP_TITLE . $title ?></title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/assets/adminLTE/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="/assets/adminLTE/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/adminLTE/datatables-buttons/css/buttons.bootstrap4.min.css">
 
+    <link rel="stylesheet" href="/assets/adminLTE/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/assets/adminLTE/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
     <?php
     foreach ($css as $file) {
         if (file_exists($file)) {
@@ -44,16 +47,25 @@
             $panel = 'active';
             $userMenu = '';
             $configMenu = '';
+            $clienteMenus = '';
             break;
         case 'user':
             $panel = '';
             $userMenu = 'active';
+            $clienteMenus = '';
             $configMenu = '';
             break;
         case 'config':
             $panel = '';
             $userMenu = '';
+            $clienteMenus = '';
             $configMenu = 'active';
+            break;
+        case 'cliente':
+            $panel = '';
+            $userMenu = '';
+            $configMenu = '';
+            $clienteMenus = 'active';
             break;
     }
     ?>
@@ -230,19 +242,7 @@
 
                         </li>
                     </ul>
-                </nav>
-
-                <!-- SidebarSearch Form -->
-                <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Pesquisar" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                </nav>               
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -256,7 +256,16 @@
                                     Painel de controle
                                 </p>
                             </a>
-                        </li>                        
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/clientes" class="nav-link <?= $clienteMenus ?>">
+                                <i class="nav-icon fa fa-user-plus"></i>
+                                <p>
+                                    Clientes
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="/admin/usuario" class="nav-link <?= $userMenu ?>">
                                 <i class="nav-icon fas fa-users"></i>
@@ -266,6 +275,7 @@
                                 </p>
                             </a>
                         </li>
+                       
                         <li class="nav-item">
                             <a href="/admin/configuracoes" class="nav-link <?= $configMenu ?>">
                                 <i class="nav-icon fas fa-th"></i>

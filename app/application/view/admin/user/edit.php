@@ -34,7 +34,7 @@ require APP . 'view/admin/_templates/initFile.php';
                         <div class="col-12">
                             <h5 class="text-primary font-weight-bold">Informações do usuário</h5>
                         </div>
-                        <div class="input-group">                           
+                        <div class="input-group">
                             <div class="col-sm-12 col-md-4">
                                 <label for="u_user">Nome de usuário</label><br>
                                 <input type="text" name="u_user" id="u_user" class="form-control" placeholder="Escreva um nome de usuário" value="<?= $response['data']['user'] ?>" required>
@@ -162,9 +162,11 @@ require APP . 'view/admin/_templates/initFile.php';
                         <div class="col-12 mt-4">
                             <h5 class="text-primary font-weight-bold">Permissões</h5>
                         </div>
-                        <div class="col-sm-12 col-md-6">
-                            <div class="card-body">
-                                <div class="row justify-content-between align-items-center">
+                        <div class="col-12">
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pl-3">
+                                    <span class="text-muted text-bold">Privilégios</span>
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" name="cl_permissao_viewer" id="cl_permissao_viewer" <?= $response['viewer'] ?>>
                                         <label for="cl_permissao_viewer" class="custom-control-label">Ver</label>
@@ -177,14 +179,54 @@ require APP . 'view/admin/_templates/initFile.php';
                                         <input class="custom-control-input" type="checkbox" name="cl_permissao_del" id="cl_permissao_del" <?= $response['del'] ?>>
                                         <label for="cl_permissao_del" class="custom-control-label">Excluir</label>
                                     </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" name="cl_permissao_sup" id="cl_permissao_sup" <?= $response['supervisor'] ?>>
-                                        <label for="cl_permissao_sup" class="custom-control-label">Supervisor?</label>
+                                </div>
+                                <div class="col-9 pl-3">
+
+                                    <span class="text-muted text-bold">Níveis</span>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-3">
+                                            <input class="d-none" type="checkbox" name="cl_permissao_adm" id="cl_permissao_adm">
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_gerente" id="cl_permissao_gerente" <?= $response['gerente'] ?>>
+                                                <label for="cl_permissao_gerente" class="custom-control-label">Gerente</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_sup" id="cl_permissao_sup" <?= $response['supervisor'] ?>>
+                                                <label for="cl_permissao_sup" class="custom-control-label">Supervisor</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_vendedor" id="cl_permissao_vendedor" <?= $response['vendedor'] ?>>
+                                                <label for="cl_permissao_vendedor" class="custom-control-label">Vendedor</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-3 pl-3">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_financeiro" id="cl_permissao_financeiro" <?= $response['financeiro'] ?>>
+                                                <label for="cl_permissao_financeiro" class="custom-control-label">Financeiro</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_fotografo" id="cl_permissao_fotografo" <?= $response['fotografo'] ?>>
+                                                <label for="cl_permissao_fotografo" class="custom-control-label">Fotógrafo</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_pos_venda" id="cl_permissao_pos_venda" <?= $response['pos_venda'] ?>>
+                                                <label for="cl_permissao_pos_venda" class="custom-control-label">Pós-venda</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-3 pl-3">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_suporte" id="cl_permissao_suporte" <?= $response['suporte'] ?>>
+                                                <label for="cl_permissao_suporte" class="custom-control-label">Suporte</label>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" name="userid" value="<?= $response['data']['userid'] ?>">
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="userid" value="<?= $response['data']['userid'] ?>">
                         </div>
+
                         <div class="col-12 d-flex justify-content-center align-items-center my-2">
                             <a href="javascript:void(0);" class="btn btn-primary btn-sm edit_user">Salvar</a>
                         </div>

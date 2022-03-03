@@ -6,6 +6,25 @@ $('body').on('click', '#formUser input[type="checkbox"]', function () {
     }
 });
 
+$('body').on('change', '#u_type_user', function () {
+    var valor = $(this).val();
+    if (valor == 'Administrador') {
+        $('#cl_permissao_viewer').attr('checked', true);
+        $('#cl_permissao_edit').attr('checked', true);
+        $('#cl_permissao_del').attr('checked', true);
+        $('#cl_permissao_adm').attr('checked', true);
+    }
+
+    if (valor == 'Usuario') {
+        $('#cl_permissao_viewer').attr('checked', true);
+        $('#cl_permissao_edit').attr('checked', false);
+        $('#cl_permissao_del').attr('checked', false);
+        // $('#cl_permissao_vendedor').attr('checked', true);
+    }
+
+});
+
+
 $('body').on('change', 'input[name="u_status_sw"]', function (e) {
     e.preventDefault();
     if ($(this).is(':checked')) {
@@ -72,7 +91,7 @@ function deleteUser(userid) {
                 success: function (response) {
                     if (response.status == 'ok') {
                         showSuccess('Sucesso! Todos os dados foram apagados.', '/admin/usuario');
-                    }else{
+                    } else {
                         showError(response.status);
                     }
                 }
@@ -94,6 +113,13 @@ $('body').on('click', '.cad_new_user', function (e) {
             case 'cl_permissao_edit': var permissao = 'edit'; var value = 1; break;
             case 'cl_permissao_del': var permissao = 'del'; var value = 1; break;
             case 'cl_permissao_sup': var permissao = 'supervisor'; var value = 1; break;
+            case 'cl_permissao_adm': var permissao = 'administrador'; var value = 1; break;
+            case 'cl_permissao_gerente': var permissao = 'gerente'; var value = 1; break;
+            case 'cl_permissao_financeiro': var permissao = 'financeiro'; var value = 1; break;
+            case 'cl_permissao_fotografo': var permissao = 'fotografo'; var value = 1; break;
+            case 'cl_permissao_suporte': var permissao = 'suporte'; var value = 1; break;
+            case 'cl_permissao_vendedor': var permissao = 'vendedor'; var value = 1; break;
+            case 'cl_permissao_pos_venda': var permissao = 'pos_venda'; var value = 1; break;
         }
 
         checkbox.push({
@@ -162,6 +188,13 @@ $('body').on('click', '.edit_user', function (e) {
             case 'cl_permissao_edit': var permissao = 'edit'; var value = 1; break;
             case 'cl_permissao_del': var permissao = 'del'; var value = 1; break;
             case 'cl_permissao_sup': var permissao = 'supervisor'; var value = 1; break;
+            case 'cl_permissao_adm': var permissao = 'administrador'; var value = 1; break;
+            case 'cl_permissao_gerente': var permissao = 'gerente'; var value = 1; break;
+            case 'cl_permissao_financeiro': var permissao = 'financeiro'; var value = 1; break;
+            case 'cl_permissao_fotografo': var permissao = 'fotografo'; var value = 1; break;
+            case 'cl_permissao_suporte': var permissao = 'suporte'; var value = 1; break;
+            case 'cl_permissao_vendedor': var permissao = 'vendedor'; var value = 1; break;
+            case 'cl_permissao_pos_venda': var permissao = 'pos_venda'; var value = 1; break;
         }
 
         checkbox.push({

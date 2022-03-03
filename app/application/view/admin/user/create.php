@@ -174,33 +174,69 @@ require APP . 'view/admin/_templates/initFile.php';
                             <h5 class="text-primary font-weight-bold">Permissões</h5>
                         </div>
                         <div class="col-12">
-                            <div class="row">
 
-                                <div class="col-4">
-                                    <div class="card-body">
-                                        <h6 class="text-bold">Usuário</h6>
-                                        <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox" name="cl_permissao_viewer" id="cl_permissao_viewer">
-                                            <label for="cl_permissao_viewer" class="custom-control-label">Ver</label>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pl-3">
+                                    <span class="text-muted text-bold">Privilégios</span>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="cl_permissao_viewer" id="cl_permissao_viewer">
+                                        <label for="cl_permissao_viewer" class="custom-control-label">Ver</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="cl_permissao_edit" id="cl_permissao_edit">
+                                        <label for="cl_permissao_edit" class="custom-control-label">Editar</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" name="cl_permissao_del" id="cl_permissao_del">
+                                        <label for="cl_permissao_del" class="custom-control-label">Excluir</label>
+                                    </div>
+                                </div>
+                                <div class="col-9 pl-3">
+
+                                    <span class="text-muted text-bold">Níveis</span>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-3">
+                                            <input class="d-none" type="checkbox" name="cl_permissao_adm" id="cl_permissao_adm">
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_gerente" id="cl_permissao_gerente">
+                                                <label for="cl_permissao_gerente" class="custom-control-label">Gerente</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_sup" id="cl_permissao_sup">
+                                                <label for="cl_permissao_sup" class="custom-control-label">Supervisor</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_vendedor" id="cl_permissao_vendedor">
+                                                <label for="cl_permissao_vendedor" class="custom-control-label">Vendedor</label>
+                                            </div>
                                         </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox" name="cl_permissao_edit" id="cl_permissao_edit">
-                                            <label for="cl_permissao_edit" class="custom-control-label">Editar</label>
+                                        <div class="col-sm-12 col-md-3 pl-3">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_financeiro" id="cl_permissao_financeiro">
+                                                <label for="cl_permissao_financeiro" class="custom-control-label">Financeiro</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_fotografo" id="cl_permissao_fotografo">
+                                                <label for="cl_permissao_fotografo" class="custom-control-label">Fotógrafo</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_pos_venda" id="cl_permissao_pos_venda">
+                                                <label for="cl_permissao_pos_venda" class="custom-control-label">Pós-venda</label>
+                                            </div>
                                         </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox" name="cl_permissao_del" id="cl_permissao_del">
-                                            <label for="cl_permissao_del" class="custom-control-label">Excluir</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox" name="cl_permissao_sup" id="cl_permissao_sup">
-                                            <label for="cl_permissao_sup" class="custom-control-label">Supervisor?</label>
+                                        <div class="col-sm-12 col-md-3 pl-3">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" name="cl_permissao_suporte" id="cl_permissao_suporte">
+                                                <label for="cl_permissao_suporte" class="custom-control-label">Suporte</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
 
                         </div>
-                        <div class="col-12 d-flex justify-content-center align-items-center my-2">
+                        <div class="col-12 d-flex justify-content-center align-items-center my-5">
                             <a href="javascript:void(0);" class="btn btn-primary btn-sm cad_new_user">Salvar</a>
                         </div>
                     </div>
