@@ -177,14 +177,74 @@ require APP . 'view/admin/_templates/initFile.php';
                                     <textarea name="cl_observacao_empresa" id="cl_observacao_empresa" class="form-control" rows="8" placeholder="Digite o texto aqui!"><?= $response['cliente']['empresa_obs'] ?></textarea>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <a href="javascript:void(0);" class="btn btn-secondary btn-sm cl_prev"><i class="fa fa-arrow-left"></i> Voltar</a>
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm cl_next">Próximo</a>
+                            </div>
+                        </div>
+                        <!-- ============================================== -->
+                        <!-- TERCEIRA ETAPA DO CADASTRO -->
+                        <div id="formStep3" class="formStep3">
+                            <div class="card col-sm-12 col-md-6 px-0 mx-auto ">
+                                <div class="card-header text-with text-center bg-black text-bold">Horário semanal de funcionamento</div>
+
+                                <div class="table-responsive">
+                                    <table id="tableHour" class="table-striped table-bordered table-sm" style="width: 100%">
+                                        <thead class="border-bottom">
+                                            <tr class="text-center text-bold px-0 mx-0" style="background-color: #DDD;">
+                                                <th>Dia da semana</th>
+                                                <th>Início expediente</th>
+                                                <th>Fim expediente</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="pl-3">Segunda Feira</td>
+                                                <td><input type="time" class="form-control" name="seg_ini" id="seg_ini" value="<?= $response['cliente']['seg_ini'] ?>"></td>
+                                                <td><input type="time" class="form-control" name="seg_end" id="seg_end" value="<?= $response['cliente']['seg_end'] ?>">
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-3">Terça Feira</td>
+                                                <td><input type="time" class="form-control" name="ter_ini" id="ter_ini" value="<?= $response['cliente']['ter_ini'] ?>"></td>
+                                                <td><input type="time" class="form-control" name="ter_end" id="ter_end" value="<?= $response['cliente']['ter_end'] ?>"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-3">Quarta Feira</td>
+                                                <td><input type="time" class="form-control" name="qua_ini" id="qua_ini" value="<?= $response['cliente']['qua_ini'] ?>"></td>
+                                                <td><input type="time" class="form-control" name="qua_end" id="qua_end" value="<?= $response['cliente']['qua_end'] ?>"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-3">Quinta Feira</td>
+                                                <td><input type="time" class="form-control" name="qui_ini" id="qui_ini" value="<?= $response['cliente']['qui_ini'] ?>"></td>
+                                                <td><input type="time" class="form-control" name="qui_end" id="qui_end" value="<?= $response['cliente']['qui_end'] ?>"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-3">Sexta Feira</td>
+                                                <td><input type="time" class="form-control" name="sex_ini" id="sex_ini" value="<?= $response['cliente']['sex_ini'] ?>"></td>
+                                                <td><input type="time" class="form-control" name="sex_end" id="sex_end" value="<?= $response['cliente']['sex_end'] ?>"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-3">Sábado</td>
+                                                <td><input type="time" class="form-control" name="sab_ini" id="sab_ini" value="<?= $response['cliente']['sab_ini'] ?>"></td>
+                                                <td><input type="time" class="form-control" name="sab_end" id="sab_end" value="<?= $response['cliente']['sab_end'] ?>"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pl-3">Domingo</td>
+                                                <td><input type="time" class="form-control" name="dom_ini" id="dom_ini" value="<?= $response['cliente']['dom_ini'] ?>"></td>
+                                                <td><input type="time" class="form-control" name="dom_end" id="dom_end" value="<?= $response['cliente']['dom_end'] ?>"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- ============================================== -->
                             <input type="hidden" name="cl_cliente_id" value="<?= $response['clienteid'] ?>">
+                            <input type="hidden" name="empresa_use_cpf" id="empresa_use_cpf">
                             <div class="card-footer">
                                 <a href="javascript:void(0);" class="btn btn-secondary btn-sm cl_prev"><i class="fa fa-arrow-left"></i> Voltar</a>
                                 <a href="javascript:void(0);" class="btn btn-primary btn-sm update-cliente">Atualizar</a>
                             </div>
                         </div>
-                        <!-- ============================================== -->
-
                     </div>
                 </form>
             </div>

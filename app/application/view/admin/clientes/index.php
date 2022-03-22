@@ -51,13 +51,13 @@ require APP . 'view/admin/_templates/initFile.php';
                             <th>Vendedor</th>
                             <th>E-mail</th>
                             <th>CPF</th>
-                            <th>Celular</th>                                              
+                            <th>Celular</th>
                             <th> Ações </th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($response['clientes'] as $cliente) {                      
+                        foreach ($response['clientes'] as $cliente) {
 
                         ?>
                             <tr class="text-sm">
@@ -65,16 +65,29 @@ require APP . 'view/admin/_templates/initFile.php';
                                 <td><?= $cliente['vendedor'] ?></td>
                                 <td><?= $cliente['cliente_email'] ?></td>
                                 <td><?= $cliente['cliente_cpf'] ?></td>
-                                <td><?= $cliente['cliente_celular1'] ?></td>                                
+                                <td><?= $cliente['cliente_celular1'] ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <a href="/admin/clientes/editar/<?= $cliente['id'] ?>" class="btn btn-primary btn-sm mr-2 "><i class="fa fa-edit"></i></a>
-                                        <a href="javascript:(0);" class="btn btn-danger btn-sm del-cliente" data-clienteid="<?= $cliente['id'] ?>"><i class="fa fa-trash"></i></a>
+                                        <?php
+                                        if ($response['edit'] == 1) {
+                                        ?>
+                                            <a href="/admin/clientes/editar/<?= $cliente['clienteid'] ?>" class="btn btn-primary btn-sm mr-2 "><i class="fa fa-edit"></i></a>
+
+                                        <?php
+                                        }
+                                        if ($response['del'] == 1) {
+
+                                        ?>
+                                            <a href="javascript:(0);" class="btn btn-danger btn-sm del-cliente" data-clienteid="<?= $cliente['id'] ?>"><i class="fa fa-trash"></i></a>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                 </td>
                             </tr>
 
                         <?php
+
                         }
                         ?>
                     </tbody>

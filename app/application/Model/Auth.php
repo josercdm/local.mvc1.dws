@@ -12,7 +12,7 @@ class Auth extends Model
     {
         $PDO = $this->PDO();
         $query = $PDO->prepare("
-            SELECT u.nome, u.id, u.acesso, u.user, u.imagem, u.senha, u.status, u.email, p.userid, p.supervisor, p.administrador, p.gerente, p.financeiro, p.fotografo, p.suporte, p.vendedor, p.pos_venda
+            SELECT u.nome, u.id, u.acesso, u.user, u.supervisor as meu_supervisor, u.imagem, u.senha, u.status, u.email, p.userid, p.supervisor, p.administrador, p.gerente, p.financeiro, p.fotografo, p.suporte, p.vendedor, p.pos_venda, p.viewer, p.edit, p.del
             FROM user u INNER JOIN permissao p ON (u.id = p.userid)
             WHERE u.user = :login 
             LIMIT 1");

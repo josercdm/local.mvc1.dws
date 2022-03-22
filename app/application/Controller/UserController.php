@@ -15,10 +15,38 @@ class UserController
     public function index()
     {
         $model = new User();
-        $response['user'] = $model->readPermissao($this->table, 'id DESC');
-        foreach ($response['user'] as $user) {
-            $response['permissao'] = $model->readPermissaoId($user['id']);
+
+        if ($_SESSION['acesso'] == 'Administrador') {
+            $response['user'] = $model->readPermissao($this->table, 'id DESC');
+
+            foreach ($response['user'] as $user) {
+                $response['permissao'] = $model->readPermissaoId($user['id']);
+            }
         }
+
+        if ($_SESSION['permissao']['supervisor'] == 1 && $_SESSION['acesso'] == 'Usuario') {
+            $response['user'] = $model->readMeusSupervisores($_SESSION['nome']);
+        }
+
+        if ($_SESSION['acesso'] == 'Usuario') {
+            $response['viewer'] = false;
+        }
+
+        if ($_SESSION['acesso'] == 'Administrador') {
+            $response['viewer'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+
+        if ($_SESSION['acesso'] == 'Administrador' && $_SESSION['permissao']['supervisor'] == 1) {
+            $response['viewer'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+
+        if ($_SESSION['permissao']['supervisor'] == 1) {
+            $response['viewer'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+
         Helper::view($this->baseView . '/index', $response);
     }
 
@@ -26,16 +54,59 @@ class UserController
     {
         $model = new User();
         $response['supervisores'] = $model->readPermissao();
+
+        if ($_SESSION['acesso'] == 'Administrador') {
+            $response['viewer'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+
+        if ($_SESSION['acesso'] == 'Administrador' && $_SESSION['permissao']['supervisor'] == 1) {
+            $response['viewer'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+
+        if ($_SESSION['acesso'] == 'Usuario' && $_SESSION['permissao']['supervisor'] == 1) {
+            $response['viewer'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+
+        if ($_SESSION['acesso'] == 'Usuario' && $_SESSION['permissao']['supervisor'] == 0) {
+            $response['viewer'] = false;
+            
+        }
+        
         Helper::view($this->baseView . '/create', $response);
     }
 
     public function viewEdit($param)
     {
+
+        if ($_SESSION['acesso'] == 'Administrador') {
+            $response['ver'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+
+        if ($_SESSION['acesso'] == 'Administrador' && $_SESSION['permissao']['supervisor'] == 1) {
+            $response['ver'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+
+        if ($_SESSION['acesso'] == 'Usuario' && $_SESSION['permissao']['supervisor'] == 1) {
+            $response['ver'] = true;
+            $response['del'] = $_SESSION['permissao']['excluir'];
+        }
+        
+        if ($_SESSION['acesso'] == 'Usuario' && $_SESSION['permissao']['supervisor'] == 0) {
+            $response['ver'] = false;
+            
+        }
+
+
         $model = new User();
         $response['data'] = $model->readPermissaoId($param['id']);
         $response['supervisores'] = $model->readSupervisores();
-
         /** checkboxes para os niveis de acesso. */
+        $response['administrador'] = isset($response['data']['administrador']) && $response['data']['administrador'] == 1 ? 'checked' : '';
         $response['supervisor'] = isset($response['data']['pm_supervisor']) && $response['data']['pm_supervisor'] == 1 ? 'checked' : '';
         $response['gerente'] = isset($response['data']['gerente']) && $response['data']['gerente'] == 1 ? 'checked' : '';
         $response['financeiro'] = isset($response['data']['financeiro']) && $response['data']['financeiro'] == 1 ? 'checked' : '';

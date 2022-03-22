@@ -19,6 +19,7 @@ $('body').on('change', '#u_type_user', function () {
         $('#cl_permissao_viewer').attr('checked', true);
         $('#cl_permissao_edit').attr('checked', false);
         $('#cl_permissao_del').attr('checked', false);
+        $('#cl_permissao_adm').attr('checked', false);
         // $('#cl_permissao_vendedor').attr('checked', true);
     }
 

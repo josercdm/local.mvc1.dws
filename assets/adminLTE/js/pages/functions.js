@@ -98,6 +98,10 @@ $(function () {
         $('#u_cpf').mask('000.000.000-00');
         $('#u_telefone').mask('(00) 0000-0000');
         $('#u_celular').mask('(00) 0 0000-0000');
+
+        $('#valor').mask('#.##0,00', {reverse: true});
+
+        
     }
 
     /**
@@ -118,7 +122,7 @@ $(function () {
                 "last": "Último",
                 "next": "Próximo",
                 "previous": "Anterior"
-            },            
+            },
             "emptyTable": "Nenhum dado à exibir!",
         }
 
@@ -147,11 +151,53 @@ $(function () {
 
     });
 
+    /**
+     * configurações para a tabela na pagina produtos
+     */
+    $("#tableProdutos").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "info": false,
+        "lengthChange": false,
+        "language": {
+            "search": "Buscar:",
+            "zeroRecords": "Nenhum dado à exibir!",
+            "paginate": {
+                "first": "Início",
+                "last": "Último",
+                "next": "Próximo",
+                "previous": "Anterior"
+            },
+            "emptyTable": "Nenhum dado à exibir!"
+        },
+        columnDefs: [
+            { width: 200, targets: 1 }
+        ],
+
+
+    });
+
+    /**
+     * configurações para a tabela de horários semanais
+     */
+    $("#tableHour").DataTable({
+        "responsive": false,
+        "lengthChange": false,
+        "autoWidth": false,
+        "info": false,
+        "lengthChange": false,
+        "searching": false,
+        "paginate": false,
+        "order": false,
+        "bSort": false
+    });
+
 });
 
-$('.select2bs4').select2({
-    theme: 'bootstrap4'
-  })
+// $('.select2bs4').select2({
+//     theme: 'bootstrap4'
+// })
 /**
  * 
  * @param {titulo do response} title 

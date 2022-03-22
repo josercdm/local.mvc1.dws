@@ -22,12 +22,12 @@ if (isset($_POST['cadastrarCliente'])) {
 
     $model = new Cliente();
 
-    $retorno['cl_nome_fantasia'] = isset($retorno['cl_nome_fantasia']) ? $retorno['cl_nome_fantasia'] : NULL;
-    $retorno['cl_cnpj'] = isset($retorno['cl_cnpj']) ? $retorno['cl_cnpj'] : NULL;
-    $retorno['cl_telefone_comercial'] = isset($retorno['cl_telefone_comercial']) ? $retorno['cl_telefone_comercial'] : NULL;
-    $retorno['cl_email_comercial'] = isset($retorno['cl_email_comercial']) ? $retorno['cl_email_comercial'] : NULL;
-    $retorno['cl_categoria'] = isset($retorno['cl_categoria']) ? $retorno['cl_categoria'] : NULL;
+    $retorno['cl_cnpj'] = isset($retorno['cl_cnpj']) ? $retorno['cl_cnpj'] : null;
     $retorno['cl_google_page'] = isset($retorno['cl_google_page']) ? $retorno['cl_google_page'] : NULL;
+    $retorno['sab_ini'] = $retorno['sab_ini'] != '' ? $retorno['sab_ini'] : null;
+    $retorno['sab_end'] = $retorno['sab_end'] != '' ? $retorno['sab_end'] : null;
+    $retorno['dom_ini'] = $retorno['dom_ini'] != '' ? $retorno['dom_ini'] : null;
+    $retorno['dom_end'] = $retorno['dom_end'] != '' ? $retorno['dom_end'] : null;
 
     $response['status'] = $model->create($retorno);
 
@@ -40,12 +40,13 @@ if (isset($_POST['editarCliente'])) {
 
     $model = new Cliente();
 
-    $retorno['cl_nome_fantasia'] = isset($retorno['cl_nome_fantasia']) ? $retorno['cl_nome_fantasia'] : NULL;
-    $retorno['cl_cnpj'] = isset($retorno['cl_cnpj']) ? $retorno['cl_cnpj'] : NULL;
-    $retorno['cl_telefone_comercial'] = isset($retorno['cl_telefone_comercial']) ? $retorno['cl_telefone_comercial'] : NULL;
-    $retorno['cl_email_comercial'] = isset($retorno['cl_email_comercial']) ? $retorno['cl_email_comercial'] : NULL;
-    $retorno['cl_categoria'] = isset($retorno['cl_categoria']) ? $retorno['cl_categoria'] : NULL;
+    
+    $retorno['cl_cnpj'] = isset($retorno['cl_cnpj']) ? $retorno['cl_cnpj'] : NULL;   
     $retorno['cl_google_page'] = isset($retorno['cl_google_page']) ? $retorno['cl_google_page'] : NULL;
+    $retorno['sab_ini'] = $retorno['sab_ini'] != '' ? $retorno['sab_ini'] : null;
+    $retorno['sab_end'] = $retorno['sab_end'] != '' ? $retorno['sab_end'] : null;
+    $retorno['dom_ini'] = $retorno['dom_ini'] != '' ? $retorno['dom_ini'] : null;
+    $retorno['dom_end'] = $retorno['dom_end'] != '' ? $retorno['dom_end'] : null;
 
     $response['status'] = $model->update($retorno);
 

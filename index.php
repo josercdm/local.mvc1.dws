@@ -5,6 +5,7 @@
 
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public_html' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'application' . DIRECTORY_SEPARATOR);
+define('ASSETS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public_html' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR);
 date_default_timezone_set("America/Sao_Paulo");
 setlocale(LC_ALL, 'pt_BR');
 
@@ -63,6 +64,14 @@ $Route->group('admin', function ($Route) {
 
         $Route->group('clientes', function ($Route) {
             $Route->crud('cliente');
+        });
+
+        $Route->group('propostas', function ($Route) {
+            $Route->crud('propostas');
+        });
+
+        $Route->group('produtos', function ($Route) {
+            $Route->crud('produtos');
         });
     } else {
         \SmartSolucoes\Libs\Helper::view('admin/auth/login');

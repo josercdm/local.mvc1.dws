@@ -15,7 +15,10 @@ class ConfiguracaoController
     public function index()
     {
         $model = new Configuracao();
-        $response = $model->all('configuracao', 'id DESC');
+        $response['model'] = $model->all('configuracao', 'id DESC');
+
+        
+        $response['viewer'] = $_SESSION['permissao']['administrador'];
         Helper::view($this->baseView . '/index', $response);
     }
 
@@ -23,7 +26,8 @@ class ConfiguracaoController
     public function viewEdit($param)
     {
         $model = new Configuracao();
-        $response = $model->find($this->table, $param['id']);
+        $response['model'] = $model->find($this->table, $param['id']);
+        $response['viewer'] = $_SESSION['permissao']['administrador'];
         Helper::view($this->baseView . '/edit', $response);
     }
 

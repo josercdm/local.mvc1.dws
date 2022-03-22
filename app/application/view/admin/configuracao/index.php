@@ -1,4 +1,7 @@
 <?php
+
+use SmartSolucoes\Libs\Helper;
+
 $title = ' - Configurações do Sistema';
 $menuActive = 'config';
 $css = [];
@@ -27,35 +30,42 @@ require APP . 'view/admin/_templates/initFile.php';
 <!-- /.content-header -->
 
 <div class="row">
-    <div class="table-responsive">
-        <!-- <div id="btnConfiguracoes">
+    <?php
+
+    if (!$response['viewer']) {
+        Helper::view('lockscreen');
+    } else {
+    ?>
+        <div class="table-responsive">
+            <!-- <div id="btnConfiguracoes">
             
         </div> -->
-        <table class="table table-striped table-bordered table-hover" id="tableConfiguracoes">
-            <thead>
-                <tr>
-                    <th>Nome do Sistema</th>
-                    <th width="90">Situação</th>
-                    <th width="90">Protocolo</th>
-                    <th width="180">Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ((array)$response as $config) {
-                    echo '<tr class="gradeX">';
-                    echo '<td>' . $config['app_title'] . '</td>';
-                    echo '<td>' . $config['environment'] . '</td>';
-                    echo '<td>' . $config['protocol'] . '</td>';
-                    echo '<td class="text-center"><a class="btn btn-success btn-sm" href="' . URL_ADMIN . '/configuracoes/editar/' . $config['id'] . '"><i class="fa fa-pencil"></i> Editar Informações</a> </td>';
-                    echo '</tr>';
-                } ?>
-            </tbody>
-            </tbody>
-        </table>
-    </div>
+            <table class="table table-striped table-bordered table-hover" id="tableConfiguracoes">
+                <thead>
+                    <tr>
+                        <th>Nome do Sistema</th>
+                        <th width="90">Situação</th>
+                        <th width="90">Protocolo</th>
+                        <th width="180">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($response['model'] as $config) {
+                        echo '<tr class="gradeX">';
+                        echo '<td>' . $config['app_title'] . '</td>';
+                        echo '<td>' . $config['environment'] . '</td>';
+                        echo '<td>' . $config['protocol'] . '</td>';
+                        echo '<td class="text-center"><a class="btn btn-success btn-sm" href="' . URL_ADMIN . '/configuracoes/editar/' . $config['id'] . '"><i class="fa fa-pencil"></i> Editar Informações</a> </td>';
+                        echo '</tr>';
+                    } ?>
+                </tbody>
+                </tbody>
+            </table>
+        </div>
 </div>
 
 <?php
-require APP . 'view/admin/_templates/endFile.php';
+    }
+    require APP . 'view/admin/_templates/endFile.php';
 ?>

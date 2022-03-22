@@ -166,6 +166,34 @@ class User extends Model
     return $query->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  public function readMeusSupervisores(string $nome)
+  {
+    $query = $this->PDO()->prepare("SELECT us.*, us.id as id_user, pm.*, pm.supervisor as pm_supervisor FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE us.supervisor = :supervisor ORDER BY nome");
+    $query->bindValue(':supervisor', $nome, PDO::PARAM_STR);
+    $query->execute();
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function readVendedores()
+  {
+    $query = $this->PDO()->prepare("SELECT us.nome, pm.userid FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE pm.vendedor = :vendedor ORDER BY nome");
+    $query->bindValue(':vendedor', 1, PDO::PARAM_INT);
+    $query->execute();
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function readVendedoresIn($supervisor)
+  {
+    $query = $this->PDO()->prepare("SELECT us.nome, pm.userid FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE pm.vendedor = :vendedor AND us.supervisor = :supervisor ORDER BY nome");
+    $query->bindValue(':vendedor', 1, PDO::PARAM_INT);
+    $query->bindValue(':supervisor', $supervisor, PDO::PARAM_STR);
+    $query->execute();
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+  }
+
   public function readPermissaoId($id)
   {
     $query = $this->PDO()->prepare("SELECT us.*, us.id as id_user, us.supervisor as us_supervisor, pm.*, pm.supervisor as pm_supervisor FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE us.id = :userid ORDER BY nome");

@@ -57,6 +57,19 @@ $(document).ready(function () {
                 }, 1000);
                 $('.cl_prev').attr('disabled', false);
                 $('#cl_nome_fantasia').focus();
+            } else {
+                if (!$('.formStep3').hasClass('active')) {
+                    $('.formStep2').removeClass('active');
+                    $('.formStep3').addClass('active');
+                    $('.formStep2').animate({
+                        opacity: '0'
+                    }, 800);
+
+                    $('.formStep3').animate({
+                        opacity: '1'
+                    }, 1000);
+                    $('.cl_prev').attr('disabled', false);
+                }
             }
         }
 
@@ -65,50 +78,50 @@ $(document).ready(function () {
     $('body').on('click', '.cl_prev', function () {
 
         if (!$('.formStep1').hasClass('active')) {
-            $('.formStep1').addClass('active');
-            $('.formStep2').removeClass('active');
-            $('.formStep1').animate({
-                opacity: '1'
-            }, 800);
+            if ($('.formStep2').hasClass('active')) {
+                $('.formStep1').addClass('active');
+                $('.formStep2').removeClass('active');
+                $('.formStep1').animate({
+                    opacity: '1'
+                }, 800);
 
-            $('.formStep2').animate({
-                opacity: '0'
-            }, 1000);
-            $('.cl_prev').attr('disabled', true);
+                $('.formStep2').animate({
+                    opacity: '0'
+                }, 1000);
+                $('.cl_prev').attr('disabled', true);
+            } else if ($('.formStep3').hasClass('active')) {
+                $('.formStep2').addClass('active');
+                $('.formStep3').removeClass('active');
+                $('.formStep2').animate({
+                    opacity: '1'
+                }, 800);
+
+                $('.formStep3').animate({
+                    opacity: '0'
+                }, 1000);
+            }
         }
     });
 
     if ($('#cl_user_cpf').is(':checked')) {
-        $('#cl_nome_fantasia').attr('disabled', true);
         $('#cl_cnpj').attr('disabled', true);
-        $('#cl_email_comercial').attr('disabled', true);
-        $('#cl_telefone_comercial').attr('disabled', true);
-        $('#cl_google_page').attr('disabled', true);
-        $('#cl_categoria').attr('disabled', true);
+        $('#empresa_use_cpf').val('Sim');
     } else {
-        $('#cl_nome_fantasia').attr('disabled', false);
         $('#cl_cnpj').attr('disabled', false);
-        $('#cl_email_comercial').attr('disabled', false);
-        $('#cl_telefone_comercial').attr('disabled', false);
-        $('#cl_google_page').attr('disabled', false);
-        $('#cl_categoria').attr('disabled', false);
+        $('#empresa_use_cpf').val('Não');
     }
 
     $('body').on('change', '#cl_user_cpf', function (e) {
         if ($('#cl_user_cpf').is(':checked')) {
-            $('#cl_nome_fantasia').attr('disabled', true);
             $('#cl_cnpj').attr('disabled', true);
-            $('#cl_email_comercial').attr('disabled', true);
-            $('#cl_telefone_comercial').attr('disabled', true);
-            $('#cl_google_page').attr('disabled', true);
-            $('#cl_categoria').attr('disabled', true);
+            $('#cl_cnpj').css('cursor', 'not-allowed');
+            $(this).attr('checked', true)
+            $('#empresa_use_cpf').val('Sim');
         } else {
-            $('#cl_nome_fantasia').attr('disabled', false);
             $('#cl_cnpj').attr('disabled', false);
-            $('#cl_email_comercial').attr('disabled', false);
-            $('#cl_telefone_comercial').attr('disabled', false);
-            $('#cl_google_page').attr('disabled', false);
-            $('#cl_categoria').attr('disabled', false);
+            $('#cl_cnpj').css('cursor', 'text');
+            $(this).attr('checked', false)
+            $('#empresa_use_cpf').val('Não');
         }
     });
 
@@ -172,32 +185,42 @@ $('body').on('click', '.update-cliente', function (e) {
 
     if ($('#cl_cep').val() == '') {
         showError('Informe o CEP da empresa.');
+        return false;
     } else if ($('#cl_rua').val() == '') {
         showError('Informe o nome da rua.');
+        return false;
     } else if ($('#cl_numero').val() == '') {
         showError('Informe o número.');
+        return false;
     } else if ($('#cl_complemento').val() == '') {
         showError('Informe o complemento.');
+        return false;
     } else if ($('#cl_bairro').val() == '') {
         showError('Informe o bairro.');
+        return false;
     } else if ($('#cl_cidade_estado').val() == '') {
         showError('Informe a cidade/estado.');
+        return false;
+    } else if ($('#cl_nome_fantasia').val() == '') {
+        showError('Informe o nome fantasia.');
+        return false;
+    } else if ($('#cl_email_comercial').val() == '') {
+        showError('Informe o e-mail da empresa.');
+        return false;
+    } else if ($('#cl_telefone_comercial').val() == '') {
+        showError('Informe um número de telefone.');
+        return false;
     } else {
         var form = $('#formCliente').serialize();
 
+        if (!$('#cl_user_cpf').is(':checked')) {
+            if ($('#cl_cnpj').val() == '') {
+                showError('Informe o CNPJ da empresa.');
+                return false;
+            } 
+        } 
         editarCliente(form);
-    }
-
-    if (!$('#cl_user_cpf').is(':checked')) {
-        if ($('#cl_nome_fantasia').val() == '') {
-            showError('Informe o nome fantasia.');
-        } else if ($('#cl_cnpj').val() == '') {
-            showError('Informe o CNPJ da empresa.');
-        } else if ($('#cl_email_comercial').val() == '') {
-            showError('Informe o e-mail da empresa.');
-        } else if ($('#cl_telefone_comercial').val() == '') {
-            showError('Informe um número de telefone.');
-        }
+        return true;
     }
 });
 
@@ -236,7 +259,7 @@ $('body').on('click', '.del-cliente', function (e) {
             deletarCliente(clienteid);
         }
     });
-    
+
 });
 
 function deletarCliente(clienteid) {

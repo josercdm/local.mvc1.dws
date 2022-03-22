@@ -4,6 +4,12 @@ namespace SmartSolucoes\Core;
 
 use PDO;
 use PDOException;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+use SmartSolucoes\Libs\Helper;
 
 class Model
 {
@@ -32,6 +38,79 @@ class Model
         $query = $this->PDO()->prepare($sql);
         $query->execute([':id' => $id]);
         return $query->fetch();
+    }
+
+    public function createPDF($path)
+    {
+
+        $options = new Options();
+        $options->setChroot(URL_DOMAIN);
+        $options->setIsRemoteEnabled(true);
+        $options->setIsHtml5ParserEnabled(true);
+        $options->setIsPhpEnabled(true);
+        // $options->setDefaultFont('Arial');
+
+        $pdf = new Dompdf($options);
+
+        $pdf->loadHtmlFile($path['pagina_1']);
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+
+        return $pdf;
+    }
+
+    public function sendMail(array $data)
+    {
+
+        $config = $this->find('configuracao', 1);
+
+        $mail = new PHPMailer(true);
+        try {
+            //Configurações do servidor
+            $mail->CharSet = 'UTF-8';
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();    // Enviar usando SMTP
+            $mail->Host       = $config['mail_host']; // Defina o servidor SMTP para enviar através
+            $mail->SMTPAuth   = $config['mail_auth']; // Ativar autenticação SMTP
+            $mail->Username   = $config['mail_user']; // Nome de usuário SMTP
+            $mail->Password   = $config['mail_pass']; // Senha SMTP
+            $mail->SMTPSecure = $config['mail_secure'];
+            $mail->Port       = $config['mail_port']; // Porta SMTP
+
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+
+            $mail->setFrom($config['mail_user'], $config['app_title']);
+            $mail->addAddress(urldecode($data["email"]));
+
+            $mail->isHTML(true);                     // Definir formato de email para HTML
+            $mail->Subject = 'Proposta Comercial';
+
+            $empresa = $data['empresa'];
+            $valor = ($data['parcela']);
+            $vendedor = $data['vendedor'];
+            $contatoVendedor = $data['contato'];
+
+            include dirname(__DIR__) . DIRECTORY_SEPARATOR . "view/admin/_templates/mail_proposta.php";
+
+            $mail->Body = $email_template;
+            $mail->AltBody = 'Este email contém html.';
+
+            // $danfe = urlencode(URL_PUBLIC . "/uploads/propostas/" . $data['propostaid'] . ".pdf");
+
+            $mail->addStringAttachment(file_get_contents($data['arquivo']), 'Proposta Comercial.pdf');
+
+            $mail->send();
+            return 'ok';
+
+        } catch (Exception $e) {
+            return "Não foi possível enviar a mensagem. Erro na correspondência: {$mail->ErrorInfo}";
+        }
     }
 
     // public function create($table, $fields, $exception = [])

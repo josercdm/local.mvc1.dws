@@ -23,6 +23,8 @@ class AuthController
                 $_SESSION['id_user']   = $user['userid'];
                 $_SESSION['acesso'] = $user['acesso'];
                 $_SESSION['imagem']   = $user['imagem'];
+                $_SESSION['supervisor'] = $user['supervisor'];
+                $_SESSION['meu_supervisor'] = $user['meu_supervisor'];
                 $_SESSION['permissao'] = array(
                     'supervisor' => $user['supervisor'],
                     'administrador' => $user['administrador'],
@@ -31,8 +33,10 @@ class AuthController
                     'fotografo' => $user['fotografo'],
                     'suporte' => $user['suporte'],
                     'vendedor' => $user['vendedor'],
-                    'pos_venda' => $user['pos_venda']
-                    
+                    'pos_venda' => $user['pos_venda'],
+                    'ver' => $user['viewer'],
+                    'editar' => $user['edit'],
+                    'excluir' => $user['del']
                 );
 
                 $response['success'] = "Você está logado!";

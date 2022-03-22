@@ -23,7 +23,7 @@
     overflow-y: auto;
   }
 
-  .formStep1{
+  .formStep1, .formStep2, .formStep3{
     background-color: '#DDD';
     width: 100%;    
     position: absolute;
@@ -33,18 +33,7 @@
     opacity: 1;
     transition: all 500ms linear 0s;
   }
-
-  .formStep2{
-    background-color: '#DDD';
-    width: 100%;    
-    position: absolute;
-    top:0;
-    right: 100%;
-    float: left;    
-    opacity: 0;
-    transition: all 500ms linear 0s;
-  }
-  
-  .formStep1.active, .formStep2.active{
+   
+  .formStep1.active, .formStep2.active, .formStep3.active{
     left: 0px !important;
   }

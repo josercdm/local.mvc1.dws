@@ -7,7 +7,7 @@
     <title><?= APP_TITLE . $title ?></title>
 
     <!-- Google Font: Source Sans Pro -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/assets/adminLTE/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -48,24 +48,49 @@
             $userMenu = '';
             $configMenu = '';
             $clienteMenus = '';
+            $propostaMenu = '';
+            $produtoMenu = '';
             break;
         case 'user':
             $panel = '';
             $userMenu = 'active';
             $clienteMenus = '';
             $configMenu = '';
+            $propostaMenu = '';
+            $produtoMenu = '';
             break;
         case 'config':
             $panel = '';
             $userMenu = '';
             $clienteMenus = '';
+            $propostaMenu = '';
+            $produtoMenu = '';
             $configMenu = 'active';
+
             break;
         case 'cliente':
             $panel = '';
             $userMenu = '';
             $configMenu = '';
+            $propostaMenu = '';
+            $produtoMenu = '';
             $clienteMenus = 'active';
+            break;
+        case 'proposta':
+            $panel = '';
+            $userMenu = '';
+            $configMenu = '';
+            $clienteMenus = '';
+            $produtoMenu = '';
+            $propostaMenu = 'active';
+            break;
+        case 'produto':
+            $panel = '';
+            $userMenu = '';
+            $configMenu = '';
+            $clienteMenus = '';
+            $produtoMenu = 'active';
+            $propostaMenu = '';
             break;
     }
     ?>
@@ -242,7 +267,7 @@
 
                         </li>
                     </ul>
-                </nav>               
+                </nav>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -258,11 +283,26 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="/admin/produtos" class="nav-link <?= $produtoMenu ?>">
+                                <i class="nav-icon fa fa-shopping-bag"></i>
+                                <p>
+                                    Produtos
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/propostas" class="nav-link <?= $propostaMenu ?>">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Propostas
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/admin/clientes" class="nav-link <?= $clienteMenus ?>">
                                 <i class="nav-icon fa fa-user-plus"></i>
                                 <p>
                                     Clientes
-                                    <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
                         </li>
@@ -271,11 +311,10 @@
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Usuários
-                                    <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
                         </li>
-                       
+
                         <li class="nav-item">
                             <a href="/admin/configuracoes" class="nav-link <?= $configMenu ?>">
                                 <i class="nav-icon fas fa-th"></i>

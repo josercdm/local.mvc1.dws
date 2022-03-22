@@ -1,4 +1,5 @@
 <?php
+
 namespace SmartSolucoes\Libs;
 
 use SmartSolucoes\Libs\Upload;
@@ -10,192 +11,198 @@ use PHPMailer\PHPMailer\Exception;
 class Helper
 {
 
-    static public function splitUrl()
-    {
-        if (isset($_GET['url'])) {
-            $url = trim($_GET['url'], '/');
-            $url = filter_var($url, FILTER_SANITIZE_URL);
-            $url = explode('/', $url);
-            return $url;
-        }
+  static public function splitUrl()
+  {
+    if (isset($_GET['url'])) {
+      $url = trim($_GET['url'], '/');
+      $url = filter_var($url, FILTER_SANITIZE_URL);
+      $url = explode('/', $url);
+      return $url;
+    }
+  }
+
+  static public function view($view, $response = [])
+  {
+    if (!$view) {
+      $view = 'error/index';
+    }
+    require APP . 'view/' . $view . '.php';
+  }
+
+  static public function ajax($nomecontroller, $action, $param)
+  {
+    $getController = '\SmartSolucoes\Controller\\' . $nomecontroller . 'Controller';
+    $controller = new $getController();
+    $controller->{$action}($param);
+  }
+
+  static public function upload($arquivo, $nome_arquivo, $caminho, $formato = false, $largura = false, $altura = false, $ratio = true)
+  {
+    $foo = new Upload($arquivo);
+    if ($foo->uploaded) {
+      $foo->file_overwrite = true;
+      $foo->file_new_name_body = $nome_arquivo;
+      if ($largura) {
+        $foo->image_convert = $formato;
+      }
+      if ($largura) {
+        $foo->image_resize = true;
+        $foo->image_ratio = $ratio;
+        $foo->image_x = $largura;
+        $foo->image_y = $altura;
+      }
+      $foo->Process($caminho);
+      if ($foo->processed) {
+        $foo->Clean();
+        return true;
+      } else {
+        //                return $foo->error;
+        return false;
+      }
+    } else {
+      //            return $foo->error;
+      return false;
+    }
+  }
+
+  static public function rearrange($arr)
+  {
+    foreach ($arr as $key => $all) {
+      foreach ($all as $i => $val) {
+        $new[$i][$key] = $val;
+      }
+    }
+    return $new;
+  }
+
+  static public function iconFile($file)
+  {
+    $file = explode('.', $file);
+    $ext = end($file);
+    switch ($ext) {
+      case 'doc':
+      case 'docx':
+        $icon = 'fa fa-file-word-o';
+        break;
+      case 'xls':
+      case 'xlsx':
+      case 'csv':
+        $icon = 'fa fa-file-excel-o';
+        break;
+      case 'ppt':
+      case 'pptx':
+        $icon = 'fa fa-file-powerpoint-o';
+        break;
+      case 'pdf':
+        $icon = 'fa fa-file-pdf-o';
+        break;
+      case 'psd':
+      case 'cdr':
+      case 'ai':
+      case 'bmp':
+      case 'gif':
+      case 'jpeg':
+      case 'jpg':
+      case 'png':
+        $icon = 'fa fa-file-image-o';
+        break;
+      case 'zip':
+      case 'rar':
+      case '7z':
+        $icon = 'fa fa-file-archive-o';
+        break;
+      case 'mp3':
+      case 'wma':
+      case 'aac':
+      case 'ogg':
+      case 'ac3':
+      case 'wav':
+        $icon = 'fa fa-file-audio-o';
+        break;
+      case 'mpeg':
+      case 'mov':
+      case 'avi':
+      case 'rmvb':
+      case 'mkv':
+      case 'mxf':
+      case 'pr':
+        $icon = 'fa fa-file-movie-o';
+        break;
+      case 'txt':
+        $icon = 'fa fa-file-text-o';
+        break;
+      case 'php':
+      case 'html':
+      case 'css':
+      case 'js':
+        $icon = 'fa fa-file-code-o';
+        break;
+      default:
+        $icon = 'fa fa-file-o';
+        break;
+    }
+    return $icon;
+  }
+
+  static public function dataHora($data, $gravar = false)
+  {
+    if ($gravar) {
+      $data = str_replace('/', '-', $data);
+      $data = date('Y-m-d H:i:s', strtotime($data));
+    } else {
+      $data = date('d/m/Y H:i', strtotime($data));
     }
 
-    static public function view($view, $response = [])
-    {
-        if(!$view) {
-            $view = 'error/index';
-        }
-        require APP . 'view/' . $view . '.php';
+    return $data;
+  }
+
+  static public function data($data, $gravar = false)
+  {
+    if ($data) {
+      if ($gravar) {
+        $data = str_replace('/', '-', $data);
+        $data = date('Y-m-d', strtotime($data));
+      } else {
+        $data = date('d/m/Y', strtotime($data));
+      }
     }
+    return $data;
+  }
 
-    static public function ajax($nomecontroller,$action,$param)
-    {
-        $getController = '\SmartSolucoes\Controller\\'.$nomecontroller.'Controller';
-        $controller = New $getController();
-        $controller->{$action}($param);
+  static public function hora($hora)
+  {
+    $hora = substr($hora, 0, -3);
+    return $hora;
+  }
+
+  static public function valor($valor, $gravar = false)
+  {
+    if ($gravar) {
+      $valor = str_replace(',', '.', str_replace(['.', 'R$', ' '], '', $valor));
+    } else {
+      $valor = number_format($valor, 2, ',', '.');
     }
+    return $valor;
+  }
 
-    static public function upload($arquivo,$nome_arquivo,$caminho,$formato=false,$largura=false,$altura=false,$ratio=true)
-    {
-        $foo = new Upload($arquivo);
-        if ($foo->uploaded) {
-            $foo->file_overwrite = true;
-            $foo->file_new_name_body = $nome_arquivo;
-            if($largura) {
-                $foo->image_convert = $formato;
-            }
-            if($largura) {
-                $foo->image_resize = true;
-                $foo->image_ratio = $ratio;
-                $foo->image_x = $largura;
-                $foo->image_y = $altura;
-            }
-            $foo->Process($caminho);
-            if ($foo->processed) {
-                $foo->Clean();
-                return true;
-            } else {
-//                return $foo->error;
-                return false;
-            }
-        } else {
-//            return $foo->error;
-            return false;
-        }
+  static public function cleanToUrl($valor)
+  {
+    return mb_strtolower(str_replace(" ", "+", preg_replace("/&([a-z])[a-z]+;/i", "$1", htmlentities(trim($valor)))));
+  }
+
+  static public function trataMail($param)
+  {
+    switch ($param['tipo']) {
+      case 'forgot':
+        $mensagem  = '<a href="' . URL_PUBLIC . '/remember/' . $param['session'] . '">Clique aqui para redefinr</a>';
+        self::mail('Redefinir Senha', $mensagem, [$param['email']]);
+        break;
     }
+  }
 
-    static public function rearrange( $arr ){
-        foreach( $arr as $key => $all ){
-            foreach( $all as $i => $val ){
-                $new[$i][$key] = $val;
-            }
-        }
-        return $new;
-    }
-
-    static public function iconFile($file){
-        $file = explode('.',$file);
-        $ext = end($file);
-        switch ($ext){
-            case 'doc':
-            case 'docx':
-                $icon = 'fa fa-file-word-o';
-                break;
-            case 'xls':
-            case 'xlsx':
-            case 'csv':
-                $icon = 'fa fa-file-excel-o';
-                break;
-            case 'ppt':
-            case 'pptx':
-                $icon = 'fa fa-file-powerpoint-o';
-                break;
-            case 'pdf':
-                $icon = 'fa fa-file-pdf-o';
-                break;
-            case 'psd':
-            case 'cdr':
-            case 'ai':
-            case 'bmp':
-            case 'gif':
-            case 'jpeg':
-            case 'jpg':
-            case 'png':
-                $icon = 'fa fa-file-image-o';
-                break;
-            case 'zip':
-            case 'rar':
-            case '7z':
-                $icon = 'fa fa-file-archive-o';
-                break;
-            case 'mp3':
-            case 'wma':
-            case 'aac':
-            case 'ogg':
-            case 'ac3':
-            case 'wav':
-                $icon = 'fa fa-file-audio-o';
-                break;
-            case 'mpeg':
-            case 'mov':
-            case 'avi':
-            case 'rmvb':
-            case 'mkv':
-            case 'mxf':
-            case 'pr':
-                $icon = 'fa fa-file-movie-o';
-                break;
-            case 'txt':
-                $icon = 'fa fa-file-text-o';
-                break;
-            case 'php':
-            case 'html':
-            case 'css':
-            case 'js':
-                $icon = 'fa fa-file-code-o';
-                break;
-            default:
-                $icon = 'fa fa-file-o';
-                break;
-        }
-        return $icon;
-    }
-
-    static public function dataHora($data,$gravar=false) {
-        if($gravar) {
-            $data = str_replace('/', '-', $data);
-            $data = date('Y-m-d H:i:s',strtotime($data));
-        } else {
-            $data = date('d/m/Y H:i',strtotime($data));
-        }
-
-        return $data;
-    }
-
-    static public function data($data,$gravar=false) {
-        if($data) {
-            if($gravar) {
-                $data = str_replace('/', '-', $data);
-                $data = date('Y-m-d',strtotime($data));
-            } else {
-                $data = date('d/m/Y',strtotime($data));
-            }
-        }
-        return $data;
-    }
-
-    static public function hora($hora) {
-        $hora = substr($hora,0,-3);
-        return $hora;
-    }
-
-    static public function valor($valor,$gravar = false) {
-        if($gravar) {
-            $valor = str_replace(',','.',str_replace(['.','R$',' '],'',$valor));
-        } else {
-            $valor = number_format($valor,2,',','.');
-        }
-        return $valor;
-    }
-
-    static public function cleanToUrl($valor)
-    {
-        return mb_strtolower(str_replace(" ","+",preg_replace("/&([a-z])[a-z]+;/i", "$1", htmlentities(trim($valor)))));
-    }
-
-    static public function trataMail($param)
-    {
-        switch($param['tipo']) {
-            case 'forgot':
-                $mensagem  = '<a href="'. URL_PUBLIC .'/remember/'.$param['session'].'">Clique aqui para redefinr</a>';
-                self::mail('Redefinir Senha',$mensagem,[$param['email']]);
-                break;
-        }
-    }
-
-    static public function mail($assunto, $msg, $email = [], $cc = false, $anexo = false)
-    {
-      $body = '<!doctype html>
+  static public function mail($assunto, $msg, $email = [], $cc = false, $anexo = false)
+  {
+    $body = '<!doctype html>
       <html>
         <head>
           <meta name="viewport" content="width=device-width" />
@@ -549,8 +556,8 @@ class Helper
                             <h1>Olá, tudo bem ?
                             </h1>
                             <p>Foi solicitado através do sistema para redefinir sua senha.<br> Clique no link abaixo para redefinir sua senha.<br></p>';
-                              $body .= $msg;
-                              $body .= '<br><br>
+    $body .= $msg;
+    $body .= '<br><br>
                               <p><strong> Ah, se você não solicitou, favor excluir este e-mail.</strong></p><br><br>
                               <p>Obrigado.</p>
                             </td>
@@ -568,7 +575,7 @@ class Helper
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td class="content-block">
-                          <span class="apple-link">&copy; "'.APP_TITLE.'"</span>.
+                          <span class="apple-link">&copy; "' . APP_TITLE . '"</span>.
                         </td>
                       </tr>
                       <tr>
@@ -591,59 +598,57 @@ class Helper
         </body>
       </html>';
 
-      $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-      try {
-          //Server settings
-          //  $mail->SMTPDebug = 2;                      // Enable verbose debug output
-          $mail->isSMTP();                            // Set mailer to use SMTP
-          $mail->Host = MAIL_HOST;                    // Specify main and backup SMTP servers
-          $mail->SMTPAuth = MAIL_AUTH;                // Enable SMTP authentication
-          $mail->Username = MAIL_USER;                // SMTP username
-          $mail->Password = MAIL_PASS;                // SMTP password
-          $mail->SMTPSecure = MAIL_SECURE;            // Enable TLS encryption, `ssl` also accepted
-          $mail->Port = MAIL_PORT;                    // TCP port to connect to
-//            $mail->SMTPAutoTLS = true; // remover quando subir no servidor
+    $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+    try {
+      //Server settings
+      //  $mail->SMTPDebug = 2;                      // Enable verbose debug output
+      $mail->isSMTP();                            // Set mailer to use SMTP
+      $mail->Host = MAIL_HOST;                    // Specify main and backup SMTP servers
+      $mail->SMTPAuth = MAIL_AUTH;                // Enable SMTP authentication
+      $mail->Username = MAIL_USER;                // SMTP username
+      $mail->Password = MAIL_PASS;                // SMTP password
+      $mail->SMTPSecure = MAIL_SECURE;            // Enable TLS encryption, `ssl` also accepted
+      $mail->Port = MAIL_PORT;                    // TCP port to connect to
+      //            $mail->SMTPAutoTLS = true; // remover quando subir no servidor
 
-          
-          $mail->SMTPOptions = array(
-            'ssl' => array(
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true
-            )
-          );
 
-          $mail->IsHTML(true);                                    // Set email format to HTML
-          $mail->CharSet = 'UTF-8';
+      $mail->SMTPOptions = array(
+        'ssl' => array(
+          'verify_peer' => false,
+          'verify_peer_name' => false,
+          'allow_self_signed' => true
+        )
+      );
 
-          //Recipients
-          $mail->setFrom($mail->Username, APP_TITLE);
-          foreach ($email as $item) {
-              $mail->addAddress($item);     // Add a recipient
-          }
-          $mail->addReplyTo($mail->Username, APP_TITLE);
-          if($cc) $mail->addCC($cc);
+      $mail->IsHTML(true);                                    // Set email format to HTML
+      $mail->CharSet = 'UTF-8';
 
-          //Attachments
-          if($anexo) $mail->addAttachment($anexo);    // Optional name use ',newName.ext'
-
-          //Content
-          $mail->isHTML(true);                                  // Set email format to HTML
-          $mail->Subject = $assunto;
-          $mail->Body    = $body;
-          $mail->AltBody = 'Este email contém html.';
-
-          $mail->send();
-
-         // return true;
-          // echo 'Message has been sent';
-      } catch (Exception $e) {
-          return false;
-            echo 'Message could not be sent.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
+      //Recipients
+      $mail->setFrom($mail->Username, APP_TITLE);
+      foreach ($email as $item) {
+        $mail->addAddress($item);     // Add a recipient
       }
+      $mail->addReplyTo($mail->Username, APP_TITLE);
+      if ($cc) $mail->addCC($cc);
 
+      //Attachments
+      if ($anexo) $mail->addAttachment($anexo);    // Optional name use ',newName.ext'
+
+      //Content
+      $mail->isHTML(true);                                  // Set email format to HTML
+      $mail->Subject = $assunto;
+      $mail->Body    = $body;
+      $mail->AltBody = 'Este email contém html.';
+
+      $mail->send();
+
+      // return true;
+      // echo 'Message has been sent';
+    } catch (Exception $e) {
+      return false;
+      echo 'Message could not be sent.';
+      echo 'Mailer Error: ' . $mail->ErrorInfo;
     }
+  }
 
 }
-

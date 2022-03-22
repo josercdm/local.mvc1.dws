@@ -76,7 +76,7 @@ require APP . 'view/admin/_templates/initFile.php';
                             <?php
                             if (isset($response['imagem']) && $response['imagem']) {
                             ?>
-                                <div class="user-image" style="background-image: url('<?= $response['imagem'] ?>');">
+                                <div class="user-image" style="background-image: url('<?= URL_PUBLIC . '/' . $response['imagem'] ?>');">
                                 </div>
                             <?php
                             }
