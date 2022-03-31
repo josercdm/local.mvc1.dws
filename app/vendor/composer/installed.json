@@ -1,17 +1,17 @@
 [
     {
         "name": "dompdf/dompdf",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "v1.2.1",
+        "version_normalized": "1.2.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/dompdf/dompdf.git",
-            "reference": "9b05381fab25dfdadc62522fa99e78807a121138"
+            "reference": "c6dfd9bb8b0040609f04754f729d4cb3016e0575"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/dompdf/dompdf/zipball/9b05381fab25dfdadc62522fa99e78807a121138",
-            "reference": "9b05381fab25dfdadc62522fa99e78807a121138",
+            "url": "https://api.github.com/repos/dompdf/dompdf/zipball/c6dfd9bb8b0040609f04754f729d4cb3016e0575",
+            "reference": "c6dfd9bb8b0040609f04754f729d4cb3016e0575",
             "shasum": ""
         },
         "require": {
@@ -32,7 +32,7 @@
             "ext-imagick": "Improves image processing performance",
             "ext-zlib": "Needed for pdf stream compression"
         },
-        "time": "2022-03-04T09:10:45+00:00",
+        "time": "2022-03-24T12:57:42+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -190,17 +190,17 @@
     },
     {
         "name": "phpmailer/phpmailer",
-        "version": "v6.6.0",
-        "version_normalized": "6.6.0.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/PHPMailer/PHPMailer.git",
-            "reference": "e43bac82edc26ca04b36143a48bde1c051cfd5b1"
+            "reference": "0912769c6656fa5425a63323f25795dfe46a8197"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/e43bac82edc26ca04b36143a48bde1c051cfd5b1",
-            "reference": "e43bac82edc26ca04b36143a48bde1c051cfd5b1",
+            "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/0912769c6656fa5425a63323f25795dfe46a8197",
+            "reference": "0912769c6656fa5425a63323f25795dfe46a8197",
             "shasum": ""
         },
         "require": {
@@ -227,9 +227,9 @@
             "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
             "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
         },
-        "time": "2022-02-28T15:31:21+00:00",
+        "time": "2022-03-11T06:35:51+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "PHPMailer\\PHPMailer\\": "src/"

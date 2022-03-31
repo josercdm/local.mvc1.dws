@@ -171,7 +171,7 @@ function cadastrarCliente(form) {
         },
         success: function (response) {
             if (response.status == 'ok') {
-                showSuccess('Os dados foram cadastrados.', '/admin/clientes/novo');
+                showSuccess('Os dados foram cadastrados.', response.url);
             } else {
                 showError('Erro ao cadastrar esses dados!');
             }
@@ -217,8 +217,8 @@ $('body').on('click', '.update-cliente', function (e) {
             if ($('#cl_cnpj').val() == '') {
                 showError('Informe o CNPJ da empresa.');
                 return false;
-            } 
-        } 
+            }
+        }
         editarCliente(form);
         return true;
     }

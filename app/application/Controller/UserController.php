@@ -53,21 +53,23 @@ class UserController
     public function newUser()
     {
         $model = new User();
-        $response['supervisores'] = $model->readPermissao();
+        
 
         if ($_SESSION['acesso'] == 'Administrador') {
             $response['viewer'] = true;
             $response['del'] = $_SESSION['permissao']['excluir'];
         }
 
-        if ($_SESSION['acesso'] == 'Administrador' && $_SESSION['permissao']['supervisor'] == 1) {
+        if ($_SESSION['acesso'] == 'Administrador' && $_SESSION['permissao']['supervisor'] == 1 || $_SESSION['acesso'] == 'Administrador' && $_SESSION['permissao']['supervisor'] == 0) {
             $response['viewer'] = true;
             $response['del'] = $_SESSION['permissao']['excluir'];
+            $response['supervisores'] = $model->readPermissao();
         }
 
         if ($_SESSION['acesso'] == 'Usuario' && $_SESSION['permissao']['supervisor'] == 1) {
             $response['viewer'] = true;
             $response['del'] = $_SESSION['permissao']['excluir'];
+            $response['supervisores'][] = array('nome' => $_SESSION['nome']);
         }
 
         if ($_SESSION['acesso'] == 'Usuario' && $_SESSION['permissao']['supervisor'] == 0) {
@@ -136,6 +138,8 @@ class UserController
                 $response['status'] = 'Inativo';
                 break;
         }
+
+        $response['data']['data_nascimento'] = date('d/m/Y', strtotime($response['data']['data_nascimento']));
 
         Helper::view($this->baseView . '/edit', $response);
     }

@@ -67,7 +67,7 @@ class ClienteController
         $response['checked'] = $response['cliente']['empresa_cnpj'] == null ? 'checked' : '';
         $response['clienteid'] = $param['id'];
 
-        
+        $response['cliente']['cliente_nascimento'] = date('d/m/Y', strtotime($response['cliente']['cliente_nascimento']));
 
         Helper::view($this->baseView . '/edit', $response);
     }

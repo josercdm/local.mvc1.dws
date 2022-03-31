@@ -3,9 +3,13 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "phpmailer/phpmailer": "~6.1",
+        "phpmailer/phpmailer": "*",
         "igorescobar/jquery-mask-plugin": "*",
-        "dompdf/dompdf": "*"
+        "dompdf/dompdf": "1.2.1",
+        "ext-mbstring": "^8.1",
+        "phenx/php-font-lib": "^0.5.4",
+        "phenx/php-svg-lib": "^0.3.3 || ^0.4.0"
+        
     },
     "autoload":
     {

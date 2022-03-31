@@ -32,6 +32,80 @@ class Model
         return self::$PDO;
     }
 
+    /**
+     * Permissões de acesso
+     *
+     * @param session $acesso
+     * @param session $permissao
+     * @param array $model
+     * @return array
+     */
+    public function permissoes($acesso, $permissao, array $model = [])
+    {
+        $all = '';
+        $v_vendedor = '';
+        $editar = $_SESSION['permissao']['editar'];
+        $excluir = $_SESSION['permissao']['excluir'];
+        
+        /**
+         * Pemissão para administrador
+         */
+        if ($acesso == 'Administrador' && $permissao['supervisor'] == 1 || $acesso == 'Administrador' && $permissao['supervisor'] == 0) {
+            if (count($model) > 0) {
+                $class = $model['class'];
+                $all =  $class->readAll();
+            }
+
+            $viewer = true;
+            $v_vendedor = true;
+        }
+
+        /**
+         * Pemissão para vendedor
+         */
+        if ($acesso == 'Usuario' && $permissao['vendedor'] == 1) {
+
+            if (count($model) > 0) {
+                $class = $model['class'];
+                $all =  $class->readVendedores($_SESSION['nome']);
+            }
+
+            $viewer = true;
+            $v_vendedor = false;
+        }
+
+        /**
+         * Pemissão para supervisor
+         */
+        if ($acesso == 'Usuario' && $permissao['supervisor'] == 1) {
+
+            if (count($model) > 0) {
+                $class = $model['class'];
+                $all =  $class->readSupervisor($_SESSION['nome']);
+            }            
+
+            $viewer = true;
+            $v_vendedor = true;            
+        }
+
+        /**
+         * Pemissão para fotografo
+         */
+        if ($acesso == 'Usuario' && $permissao['fotografo'] == 1) {
+
+            $viewer = false;
+        }
+        /********************************************** */
+
+        return [
+            'viewer' => $viewer,
+            'vendas' => $all,
+            'v_vendedor' => $v_vendedor,
+            'edit' => $editar,
+            'del' => $excluir
+        ];
+    }
+
     public function find($table, $id)
     {
         $sql = "SELECT * FROM " . $table . " WHERE id = :id LIMIT 1";
@@ -47,8 +121,8 @@ class Model
         $options->setChroot(URL_DOMAIN);
         $options->setIsRemoteEnabled(true);
         $options->setIsHtml5ParserEnabled(true);
-        $options->setIsPhpEnabled(true);
-        // $options->setDefaultFont('Arial');
+        // $options->setIsPhpEnabled(true);
+        $options->setDefaultFont('Arial');
 
         $pdf = new Dompdf($options);
 
@@ -107,7 +181,6 @@ class Model
 
             $mail->send();
             return 'ok';
-
         } catch (Exception $e) {
             return "Não foi possível enviar a mensagem. Erro na correspondência: {$mail->ErrorInfo}";
         }

@@ -78,12 +78,12 @@ require APP . 'view/admin/_templates/initFile.php';
 
                                 <div class="col-sm-12 col-md-3">
                                     <label for="cl_cpf">CPF</label><br>
-                                    <input type="text" name="cl_cpf" id="cl_cpf" class="form-control" placeholder="Informe o número" value="<?= $response['cliente']['cliente_cpf'] ?>">
+                                    <input type="tel" name="cl_cpf" id="cl_cpf" class="form-control" placeholder="Informe o número" value="<?= $response['cliente']['cliente_cpf'] ?>">
                                 </div>
 
                                 <div class="col-sm-12 col-md-3">
                                     <label for="cl_data_nascimento">Nascimento</label><br>
-                                    <input type="date" name="cl_data_nascimento" id="cl_data_nascimento" class="form-control date" value="<?= $response['cliente']['cliente_nascimento'] ?>">
+                                    <input type="tel" name="cl_data_nascimento" id="cl_data_nascimento" class="form-control" placeholder="dd/mm/YYYY" value="<?= $response['cliente']['cliente_nascimento'] ?>">
                                 </div>
                             </div>
                             <hr>
@@ -111,7 +111,7 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </div>
                                 <div class="col-sm-12 col-md-2">
                                     <label for="cl_cnpj">CNPJ</label><br>
-                                    <input type="text" name="cl_cnpj" id="cl_cnpj" class="form-control" placeholder="Informe o CNPJ da empresa" value="<?= $response['cliente']['empresa_cnpj'] ?>">
+                                    <input type="tel" name="cl_cnpj" id="cl_cnpj" class="form-control" placeholder="Informe o CNPJ da empresa" value="<?= $response['cliente']['empresa_cnpj'] ?>">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" name="cl_user_cpf" id="cl_user_cpf" <?= $response['checked'] ?>>
                                         <label for="cl_user_cpf" class="custom-control-label">Usar CPF do responsável</label>
@@ -143,7 +143,7 @@ require APP . 'view/admin/_templates/initFile.php';
                             <div class="row mb-3">
                                 <div class="col-sm-12 col-md-3">
                                     <label for="cl_cep">CEP</label><br>
-                                    <input type="text" name="cl_cep" id="cl_cep" class="form-control" placeholder="Digite o CEP" value="<?= $response['cliente']['empresa_cep'] ?>">
+                                    <input type="tel" name="cl_cep" id="cl_cep" class="form-control" placeholder="Digite o CEP" value="<?= $response['cliente']['empresa_cep'] ?>">
                                 </div>
 
                                 <div class="col-sm-12 col-md-4">
@@ -152,7 +152,7 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </div>
                                 <div class="col-sm-12 col-md-2">
                                     <label for="cl_numero">Número</label><br>
-                                    <input type="text" name="cl_numero" id="cl_numero" class="form-control" placeholder="Digite o número" value="<?= $response['cliente']['empresa_numero'] ?>">
+                                    <input type="tel" name="cl_numero" id="cl_numero" class="form-control" placeholder="Digite o número" value="<?= $response['cliente']['empresa_numero'] ?>">
                                 </div>
                                 <div class="col-sm-12 col-md-3">
                                     <label for="cl_complemento">Complemento</label><br>

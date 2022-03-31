@@ -73,6 +73,10 @@ $Route->group('admin', function ($Route) {
         $Route->group('produtos', function ($Route) {
             $Route->crud('produtos');
         });
+
+        $Route->group('vendas', function ($Route) {
+            $Route->crud('vendas');
+        });
     } else {
         \SmartSolucoes\Libs\Helper::view('admin/auth/login');
     }

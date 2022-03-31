@@ -37,6 +37,17 @@ class Produtos extends Model
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function readProdutosNotIn($id)
+    {
+        $sql = "SELECT pdt.id,pdt.produto FROM produtos pdt WHERE NOT EXISTS (SELECT * FROM venda_items WHERE venda_id = :venda_id AND produto_id = pdt.id)";
+        $query = $this->PDO()->prepare($sql);
+        $query->bindValue(':venda_id', $id, PDO::PARAM_INT);
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
     public function readProduto($produtoid)
     {
         $sql = "SELECT id,produto FROM produtos WHERE id = :id";

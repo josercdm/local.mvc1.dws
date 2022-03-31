@@ -177,8 +177,31 @@ class User extends Model
 
   public function readVendedores()
   {
-    $query = $this->PDO()->prepare("SELECT us.nome, pm.userid FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE pm.vendedor = :vendedor ORDER BY nome");
+    $query = $this->PDO()->prepare("SELECT us.nome, pm.userid FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE pm.vendedor = :vendedor AND us.status = :status ORDER BY nome");
     $query->bindValue(':vendedor', 1, PDO::PARAM_INT);
+    $query->bindValue(':status', 1, PDO::PARAM_INT);
+    $query->execute();
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+  }
+  
+
+  public function readVendedor($vendedor)
+  {
+    $query = $this->PDO()->prepare("SELECT * FROM user WHERE nome = :vendedor AND status = :status OR id = :id AND status = :status");
+    $query->bindValue(':vendedor', $vendedor, PDO::PARAM_STR);
+    $query->bindValue(':id', $vendedor, PDO::PARAM_INT);
+    $query->bindValue(':status', 1, PDO::PARAM_INT);
+    $query->execute();
+
+    return $query->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public function readFotografos()
+  {
+    $query = $this->PDO()->prepare("SELECT us.nome, pm.userid FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE pm.fotografo = :fotografo AND us.status = :status ORDER BY nome");
+    $query->bindValue(':fotografo', 1, PDO::PARAM_INT);
+    $query->bindValue(':status', 1, PDO::PARAM_INT);
     $query->execute();
 
     return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -186,9 +209,10 @@ class User extends Model
 
   public function readVendedoresIn($supervisor)
   {
-    $query = $this->PDO()->prepare("SELECT us.nome, pm.userid FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE pm.vendedor = :vendedor AND us.supervisor = :supervisor ORDER BY nome");
+    $query = $this->PDO()->prepare("SELECT us.nome, pm.userid FROM user us INNER JOIN permissao pm ON (us.id = pm.userid) WHERE pm.vendedor = :vendedor AND us.supervisor = :supervisor AND us.status = :status ORDER BY nome");
     $query->bindValue(':vendedor', 1, PDO::PARAM_INT);
     $query->bindValue(':supervisor', $supervisor, PDO::PARAM_STR);
+    $query->bindValue(':status', 1, PDO::PARAM_INT);
     $query->execute();
 
     return $query->fetchAll(PDO::FETCH_ASSOC);

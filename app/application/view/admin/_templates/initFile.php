@@ -92,6 +92,15 @@
             $produtoMenu = 'active';
             $propostaMenu = '';
             break;
+        case 'vendas':
+            $panel = '';
+            $userMenu = '';
+            $configMenu = '';
+            $clienteMenus = '';
+            $produtoMenu = '';
+            $propostaMenu = '';
+            $vendaMenu = 'active';
+            break;
     }
     ?>
 </head>
@@ -303,6 +312,14 @@
                                 <i class="nav-icon fa fa-user-plus"></i>
                                 <p>
                                     Clientes
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/vendas" class="nav-link <?= $vendaMenu ?>">
+                                <i class="nav-icon fa fa-cart-plus"></i>
+                                <p>
+                                    Vendas
                                 </p>
                             </a>
                         </li>

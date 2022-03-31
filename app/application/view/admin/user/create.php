@@ -77,8 +77,12 @@ require APP . 'view/admin/_templates/initFile.php';
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_supervisor">Supervisor</label><br>
                                     <select name="u_supervisor" id="u_supervisor" class="form-control">
-                                        <option value="">Selecione um supervisor</option>
                                         <?php
+                                        if ($_SESSION['acesso'] == 'Administrador') {
+                                        ?>
+                                            <option value="">Selecione um supervisor</option>
+                                        <?php
+                                        }
                                         foreach ($response['supervisores'] as $supervisor) {
                                         ?>
                                             <option value="<?= $supervisor['nome'] ?>"><?= $supervisor['nome'] ?></option>
@@ -87,15 +91,15 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_meta">Meta</label><br>
-                                    <input type="text" name="u_meta" id="u_meta" class="form-control" placeholder="10.000,00" required>
+                                    <input type="tel" name="u_meta" id="u_meta" class="form-control" placeholder="10.000,00" required>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_comissao">Comissão (%)</label><br>
-                                    <input type="text" name="u_comissao" id="u_comissao" class="form-control" placeholder="10%" required>
+                                    <input type="tel" name="u_comissao" id="u_comissao" class="form-control" placeholder="10%" required>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_comissao_b_meta">Comissão Bater Meta (%)</label><br>
-                                    <input type="text" name="u_comissao_b_meta" id="u_comissao_b_meta" class="form-control" placeholder="10%" required>
+                                    <input type="tel" name="u_comissao_b_meta" id="u_comissao_b_meta" class="form-control" placeholder="10%" required>
                                 </div>
 
                             </div>
@@ -110,7 +114,7 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_cpf">CPF</label><br>
-                                    <input type="text" name="u_cpf" id="u_cpf" class="form-control" placeholder="Informe o CPF" required>
+                                    <input type="tel" name="u_cpf" id="u_cpf" class="form-control" placeholder="Informe o CPF" required>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_telefone">Telefone</label><br>
@@ -122,7 +126,7 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_nasc">Data de Nascimento</label><br>
-                                    <input type="date" name="u_nasc" id="u_nasc" class="form-control" placeholder="Data de nascimento" required>
+                                    <input type="tel" name="u_nasc" id="u_nasc" class="form-control" placeholder="dd/mm/YYYY" required>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_atuacao_uf">Região de Atuação</label><br>
@@ -152,7 +156,7 @@ require APP . 'view/admin/_templates/initFile.php';
                             <div class="input-group">
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_cep">CEP</label><br>
-                                    <input type="text" name="u_cep" id="u_cep" class="form-control" placeholder="Informe o CEP" required>
+                                    <input type="tel" name="u_cep" id="u_cep" class="form-control" placeholder="Informe o CEP" required>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_rua">Endereço</label><br>
@@ -160,7 +164,7 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_numero">Número</label><br>
-                                    <input type="text" name="u_numero" id="u_numero" class="form-control" placeholder="Informe o numero" required>
+                                    <input type="tel" name="u_numero" id="u_numero" class="form-control" placeholder="Informe o numero" required>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label for="u_complemento">Complemento</label><br>

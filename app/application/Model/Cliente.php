@@ -61,13 +61,23 @@ class Cliente extends Model
 
         $query->execute();
 
-        return 'ok';
+        return $this->PDO()->lastInsertId();
     }
 
     public function readAll()
     {
-        $sql = "SELECT * FROM clientes ORDER BY cliente_nome";
+        $sql = "SELECT cl.*, cl.id as clienteid FROM clientes cl ORDER BY cl.cliente_nome";
         $query = $this->PDO()->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function readLikeCliente($texto)
+    {
+        $sql = "SELECT cl.*, cl.id as clienteid FROM clientes cl WHERE cl.cliente_nome LIKE :texto ORDER BY cl.cliente_nome";
+        $query = $this->PDO()->prepare($sql);
+        $query->bindValue(':texto', "%$texto%", PDO::PARAM_STR);
         $query->execute();
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -80,7 +90,7 @@ class Cliente extends Model
      */
     public function readClienteVendedor($vendedor)
     {
-        $sql = "SELECT * FROM clientes WHERE vendedor = :vendedor ORDER BY cliente_nome";
+        $sql = "SELECT cl.*, cl.id as clienteid FROM clientes cl WHERE cl.vendedor = :vendedor ORDER BY cl.cliente_nome";
         $query = $this->PDO()->prepare($sql);
         $query->bindValue(':vendedor', $vendedor, PDO::PARAM_STR);
         $query->execute();
@@ -88,14 +98,29 @@ class Cliente extends Model
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-     /**
+    /**
+     * Exibe todos os clientes cadastrados
+     *
+     * @return void
+     */
+    public function readClienteVendedorSup($vendedor)
+    {
+        $sql = "SELECT cl.*, cl.id as clienteid, u.supervisor FROM clientes cl INNER JOIN user u ON (cl.vendedor = u.nome) WHERE u.id = :vendedor ORDER BY cl.cliente_nome";
+        $query = $this->PDO()->prepare($sql);
+        $query->bindValue(':vendedor', $vendedor, PDO::PARAM_INT);
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Exibe todos os clientes cadastrados
      *
      * @return void
      */
     public function readClienteSupervisor($supervisor)
     {
-        $sql = "SELECT cl.*, cl.id as clienteid, us.* FROM clientes cl INNER JOIN user us ON (us.nome = cl.vendedor) WHERE supervisor = :supervisor ORDER BY cl.cliente_nome";
+        $sql = "SELECT cl.*, cl.id as clienteid, us.* FROM clientes cl INNER JOIN user us ON (us.nome = cl.vendedor) WHERE us.supervisor = :supervisor ORDER BY cl.cliente_nome";
         $query = $this->PDO()->prepare($sql);
         $query->bindValue(':supervisor', $supervisor, PDO::PARAM_STR);
         $query->execute();
@@ -103,11 +128,12 @@ class Cliente extends Model
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function readCliente($clienteid)
+    public function readCliente($cliente)
     {
-        $sql = "SELECT * FROM clientes WHERE id = :clienteid";
+        $sql = "SELECT * FROM clientes WHERE id = :clienteid OR cliente_nome = :cliente_nome";
         $query = $this->PDO()->prepare($sql);
-        $query->bindValue(':clienteid', $clienteid, PDO::PARAM_INT);
+        $query->bindValue(':clienteid', $cliente, PDO::PARAM_INT);
+        $query->bindValue(':cliente_nome', $cliente, PDO::PARAM_STR);
         $query->execute();
 
         return $query->fetch(PDO::FETCH_ASSOC);
@@ -157,6 +183,24 @@ class Cliente extends Model
         $query->bindValue(':id', $data['cl_cliente_id'], PDO::PARAM_INT);
         $query->execute();
 
+        return 'ok';
+    }
+
+    public function updateVendedor(array $data)
+    {
+        $valida = $this->PDO()->prepare("SELECT vendedor FROM clientes WHERE id = :id");
+        $valida->bindValue(':id', $data['vnd_cliente'], PDO::PARAM_INT);
+        $valida->execute();
+
+        $vendedor = $valida->fetch(PDO::FETCH_ASSOC);
+        if ($vendedor['vendedor'] != $data['vendedor_nome']) {
+            $sql = "UPDATE clientes SET vendedor = :vendedor WHERE id = :id";
+
+            $query = $this->PDO()->prepare($sql);
+            $query->bindValue(':vendedor', $data['vendedor_nome'], PDO::PARAM_STR);
+            $query->bindValue(':id', $data['vnd_cliente'], PDO::PARAM_INT);
+            $query->execute();
+        }
         return 'ok';
     }
 

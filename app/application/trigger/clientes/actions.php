@@ -29,8 +29,13 @@ if (isset($_POST['cadastrarCliente'])) {
     $retorno['dom_ini'] = $retorno['dom_ini'] != '' ? $retorno['dom_ini'] : null;
     $retorno['dom_end'] = $retorno['dom_end'] != '' ? $retorno['dom_end'] : null;
 
-    $response['status'] = $model->create($retorno);
+    $date_format = explode('/', $retorno['cl_data_nascimento']);
 
+    $retorno['cl_data_nascimento'] = $date_format[2] . '-' . $date_format[1] . '-' . $date_format[0];
+
+    $clienteid = $model->create($retorno);
+    $response['url'] = URL_ADMIN . '/vendas/novo/' . $clienteid;
+    $response['status'] = 'ok';
     echo json_encode($response);
 }
 
@@ -40,13 +45,17 @@ if (isset($_POST['editarCliente'])) {
 
     $model = new Cliente();
 
-    
-    $retorno['cl_cnpj'] = isset($retorno['cl_cnpj']) ? $retorno['cl_cnpj'] : NULL;   
+
+    $retorno['cl_cnpj'] = isset($retorno['cl_cnpj']) ? $retorno['cl_cnpj'] : NULL;
     $retorno['cl_google_page'] = isset($retorno['cl_google_page']) ? $retorno['cl_google_page'] : NULL;
     $retorno['sab_ini'] = $retorno['sab_ini'] != '' ? $retorno['sab_ini'] : null;
     $retorno['sab_end'] = $retorno['sab_end'] != '' ? $retorno['sab_end'] : null;
     $retorno['dom_ini'] = $retorno['dom_ini'] != '' ? $retorno['dom_ini'] : null;
     $retorno['dom_end'] = $retorno['dom_end'] != '' ? $retorno['dom_end'] : null;
+
+    $date_format = explode('/', $retorno['cl_data_nascimento']);
+
+    $retorno['cl_data_nascimento'] = $date_format[2] . '-' . $date_format[1] . '-' . $date_format[0];
 
     $response['status'] = $model->update($retorno);
 

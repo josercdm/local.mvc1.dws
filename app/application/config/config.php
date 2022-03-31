@@ -34,3 +34,8 @@ define('MAIL_SECURE', $config['mail_secure']);
 define('MAIL_PORT', $config['mail_port']);
 define('MAIL_SENDTYPE', $config['mail_sendtype']);
 define('MAIL_CONTATO', $config['mail_contact']);
+
+define('AUTENTIQUE_TOKEN', $config['token_autentique']);
+define('AUTENTIQUE_URL', $config['autentique_url']);
+define('AUTENTIQUE_DEV_MODE', $config['autentique_dev_mode']);
+

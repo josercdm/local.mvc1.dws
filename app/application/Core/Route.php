@@ -135,9 +135,7 @@ class Route
             case 'inativar':
                 $this->get('inativar', ucfirst($controller) . 'Controller@disable', 'id');
                 break;
-            case 'gerar_proposta':
-                $this->get('gerar_proposta', ucfirst($controller) . 'Controller@viewPDF');
-                break;
+            
         }
     }
 

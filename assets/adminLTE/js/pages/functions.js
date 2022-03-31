@@ -98,9 +98,9 @@ $(function () {
         $('#u_cpf').mask('000.000.000-00');
         $('#u_telefone').mask('(00) 0000-0000');
         $('#u_celular').mask('(00) 0 0000-0000');
+        $('#cl_data_nascimento, #u_nasc').mask('00/00/0000');
 
         $('#valor').mask('#.##0,00', {reverse: true});
-
         
     }
 
@@ -154,7 +154,7 @@ $(function () {
     /**
      * configurações para a tabela na pagina produtos
      */
-    $("#tableProdutos").DataTable({
+    $("#tableProdutos, #tableVenda, #tableClientes, #tableUser").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
@@ -195,9 +195,9 @@ $(function () {
 
 });
 
-// $('.select2bs4').select2({
-//     theme: 'bootstrap4'
-// })
+$('.select2bs4').select2({
+    theme: 'bootstrap4'
+})
 /**
  * 
  * @param {titulo do response} title 

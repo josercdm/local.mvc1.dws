@@ -45,11 +45,17 @@ require APP . 'view/admin/_templates/initFile.php';
                                 <div class="col-sm-12 col-md-4">
                                     <label for="cl_vendedor">Vendedor</label>
                                     <select class="form-control select2bs4" name="cl_vendedor" id="cl_vendedor">
-                                        <option value="" selected="selected">Selecione o vendedor</option>
                                         <?php
-                                        print_r($response['vendedores']);
+
+                                        if ($_SESSION['acesso'] == 'Administrador' && $_SESSION['permissao']['supervisor'] == 1 || $_SESSION['acesso'] == 'Usuario' && $_SESSION['permissao']['supervisor'] == 1 || $_SESSION['acesso'] == 'Administrador' && $_SESSION['permissao']['supervisor'] == 0) {
+
+                                        ?>
+                                            <option value="" selected="selected">Selecione o vendedor</option>
+
+                                        <?php
+                                        }
                                         foreach ($response['vendedores'] as $vendedores) {
-                                            
+
                                         ?>
                                             <option value="<?= $vendedores['nome'] ?>"><?= $vendedores['nome'] ?></option>
                                         <?php
@@ -80,12 +86,12 @@ require APP . 'view/admin/_templates/initFile.php';
 
                                 <div class="col-sm-12 col-md-3">
                                     <label for="cl_cpf">CPF</label><br>
-                                    <input type="text" name="cl_cpf" id="cl_cpf" class="form-control" placeholder="Informe o número">
+                                    <input type="tel" name="cl_cpf" id="cl_cpf" class="form-control" placeholder="Informe o número">
                                 </div>
 
                                 <div class="col-sm-12 col-md-3">
                                     <label for="cl_data_nascimento">Nascimento</label><br>
-                                    <input type="date" name="cl_data_nascimento" id="cl_data_nascimento" class="form-control date">
+                                    <input type="tel" name="cl_data_nascimento" id="cl_data_nascimento" class="form-control" placeholder="dd/mm/YYYY">
                                 </div>
                             </div>
                             <hr>
@@ -113,7 +119,7 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </div>
                                 <div class="col-sm-12 col-md-2">
                                     <label for="cl_cnpj">CNPJ</label><br>
-                                    <input type="text" name="cl_cnpj" id="cl_cnpj" class="form-control" placeholder="Informe o CNPJ da empresa">
+                                    <input type="tel" name="cl_cnpj" id="cl_cnpj" class="form-control" placeholder="Informe o CNPJ da empresa">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" name="cl_user_cpf" id="cl_user_cpf">
                                         <label for="cl_user_cpf" class="custom-control-label">Usar CPF do responsável</label>
@@ -145,7 +151,7 @@ require APP . 'view/admin/_templates/initFile.php';
                             <div class="row mb-3">
                                 <div class="col-sm-12 col-md-3">
                                     <label for="cl_cep">CEP</label><br>
-                                    <input type="text" name="cl_cep" id="cl_cep" class="form-control" placeholder="Digite o CEP">
+                                    <input type="tel" name="cl_cep" id="cl_cep" class="form-control" placeholder="Digite o CEP">
                                 </div>
 
                                 <div class="col-sm-12 col-md-4">
@@ -154,7 +160,7 @@ require APP . 'view/admin/_templates/initFile.php';
                                 </div>
                                 <div class="col-sm-12 col-md-2">
                                     <label for="cl_numero">Número</label><br>
-                                    <input type="text" name="cl_numero" id="cl_numero" class="form-control" placeholder="Digite o número">
+                                    <input type="tel" name="cl_numero" id="cl_numero" class="form-control" placeholder="Digite o número">
                                 </div>
                                 <div class="col-sm-12 col-md-3">
                                     <label for="cl_complemento">Complemento</label><br>

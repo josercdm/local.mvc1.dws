@@ -7,7 +7,6 @@ use SmartSolucoes\Core\Model;
 use SmartSolucoes\Model\Propostas;
 use SmartSolucoes\Model\Produtos;
 use PHPMailer\PHPMailer;
-use SmartSolucoes\Libs\Helper;
 
 if (isset($_POST['create'])) {
     $form = filter_input(INPUT_POST, 'form', FILTER_DEFAULT);

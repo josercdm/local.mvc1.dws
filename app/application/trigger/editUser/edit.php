@@ -21,6 +21,9 @@ if (isset($_POST['trigger'])) {
     } else {
         $retorno['password'] = password_hash($retorno['u_pass'], PASSWORD_BCRYPT);
         $param = array();
+        $date_format = explode('/', $retorno['u_nasc']);
+
+        $retorno['u_nasc'] = $date_format[2] . '-' . $date_format[1] . '-' . $date_format[0];
 
         $lastId = $user->cadastrar($retorno);
 
@@ -60,6 +63,9 @@ if (isset($_POST['edit'])) {
         $response['status'] = 'Número de CPF inválido.';
     } else {
         $param = array();
+        $date_format = explode('/', $retorno['u_nasc']);
+
+        $retorno['u_nasc'] = $date_format[2] . '-' . $date_format[1] . '-' . $date_format[0];
         $user->updateUser($retorno);
 
         if ($permissao != null) {
